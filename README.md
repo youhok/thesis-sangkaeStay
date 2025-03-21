@@ -2,14 +2,6 @@
 
 A Flutter application for managing accommodations and stays.
 
-## Getting Started
-
-### Prerequisites
-- Flutter SDK (latest stable version)
-- Dart SDK
-- Firebase CLI (for Firebase integration)
-- Android Studio / VS Code with Flutter extensions
-
 ### Installation
 
 1. Clone the repository
