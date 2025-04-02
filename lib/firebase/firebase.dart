@@ -8,7 +8,7 @@ Future<void> initializeFirebase() async {
             apiKey: "AIzaSyA7TCd8sTaCPjCwvEIS1GnakDpXDzPFOuU",
             authDomain: "thesis-sangkaestay.firebaseapp.com",
             projectId: "thesis-sangkaestay",
-            storageBucket: "thesis-sangkaestay.fi rebasestorage.app",
+            storageBucket: "thesis-sangkaestay.firebasestorage.app",
             messagingSenderId: "179320462747",
             appId: "1:179320462747:web:542d064b9c9a4204a1953e",
             measurementId: "G-H98L8W0EPK"));

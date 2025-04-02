@@ -1,10 +1,89 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sankaestay/util/constants.dart';
-
+import 'package:sankaestay/auth/role/role_screen.dart';
 import 'package:sankaestay/widgets/Triangle_Painter.dart';
+import 'package:sankaestay/rental/widgets/tenentwidgets/Bottom_navbar.dart';
+import 'package:sankaestay/rental/screen/landlord/dash_board.dart';
 
-class LoadingScreen extends StatelessWidget {
+class LoadingScreen extends StatefulWidget {
   const LoadingScreen({super.key});
+
+  @override
+  State<LoadingScreen> createState() => _LoadingScreenState();
+}
+
+class _LoadingScreenState extends State<LoadingScreen> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkAuth();
+  }
+
+  Future<void> _checkAuth() async {
+    await Future.delayed(
+        const Duration(seconds: 2)); // Show loading screen for 2 seconds
+    if (!mounted) return;
+
+    final user = _auth.currentUser;
+    if (user == null) {
+      // User is not authenticated, navigate to role screen
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const RoleScreen()),
+      );
+    } else {
+      try {
+        // Get user document from Firestore
+        final userDoc =
+            await _firestore.collection('users').doc(user.uid).get();
+
+        if (!userDoc.exists) {
+          // If user document doesn't exist, navigate to role screen
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const RoleScreen()),
+          );
+          return;
+        }
+
+        final userData = userDoc.data();
+        final role = userData?['role'] as String?;
+
+        if (role == null) {
+          // If role is not set, navigate to role screen
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const RoleScreen()),
+          );
+          return;
+        }
+
+        // Navigate based on role
+        if (role == 'tenant') {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const BottomNavBar()),
+          );
+        } else if (role == 'landlord') {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const Dashboard()),
+          );
+        } else {
+          // Unknown role, navigate to role screen
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const RoleScreen()),
+          );
+        }
+      } catch (e) {
+        print('Error checking user role: $e');
+        // On error, navigate to role screen
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const RoleScreen()),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +141,7 @@ class LoadingScreen extends StatelessWidget {
                   const Text(
                     'Find Room & Manage Property',
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       color: Colors.white,
                     ),
                   ),
@@ -75,4 +154,3 @@ class LoadingScreen extends StatelessWidget {
     );
   }
 }
-

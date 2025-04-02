@@ -1,15 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
 import 'package:sankaestay/util/constants.dart';
 
-class Verification extends StatelessWidget {
-  Verification({super.key});
+class Verification extends StatefulWidget {
+  final String phoneNumber;
 
+  Verification({
+    Key? key,
+    required this.phoneNumber,
+  }) : super(key: key);
+
+  @override
+  State<Verification> createState() => _VerificationState();
+}
+
+class _VerificationState extends State<Verification> {
   final List<TextEditingController> _controllers =
-      List.generate(6, (index) => TextEditingController());
-  final List<FocusNode> _focusNodes =
-      List.generate(6, (index) => FocusNode());
+      List.generate(6, (_) => TextEditingController());
+  final List<FocusNode> _focusNodes = List.generate(6, (_) => FocusNode());
+
+  @override
+  void dispose() {
+    for (var controller in _controllers) {
+      controller.dispose();
+    }
+    for (var node in _focusNodes) {
+      node.dispose();
+    }
+    super.dispose();
+  }
+
+  void _onOtpChanged(String value, int index) {
+    if (value.length == 1) {
+      if (index < 5) {
+        _focusNodes[index + 1].requestFocus();
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,99 +64,97 @@ class Verification extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(height: 20),
-                    // Logo
-                    SvgPicture.asset(
-                      'images/logo_blue.svg', // Replace with your asset path
-                      height: 110,
-                    ),
+                    SvgPicture.asset('images/logo_blue.svg', height: 110),
                     const SizedBox(height: 20),
-                    // Title
                     const Text(
-                      'Verifications',
+                      'Verify Your Phone',
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                       ),
-                      textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 10),
-                    // Subtitle
-                    const Text(
-                      '6-digits pin has been sent to your email address.',
-                      style: TextStyle(
+                    Text(
+                      'Enter the code sent to ${widget.phoneNumber}',
+                      style: const TextStyle(
                         fontSize: 16,
                         color: Colors.grey,
                       ),
-                      textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 30),
-                    // Code Verification Label
-                    const Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Code verification',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    // OTP Input Fields
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: List.generate(6, (index) {
-                        return SizedBox(
-                          width: 50,
-                          child: TextFormField(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: List.generate(
+                        6,
+                        (index) => Container(
+                          width: 55,
+                          height: 55,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: _focusNodes[index].hasFocus
+                                  ? const Color(0xFF001D57)
+                                  : Colors.grey.shade300,
+                              width: 2,
+                            ),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: TextField(
                             controller: _controllers[index],
                             focusNode: _focusNodes[index],
                             keyboardType: TextInputType.number,
                             textAlign: TextAlign.center,
                             maxLength: 1,
-                            onChanged: (value) {
-                              if (value.isNotEmpty) {
-                                if (index < 5) {
-                                  _focusNodes[index + 1].requestFocus();
-                                } else {
-                                  _focusNodes[index].unfocus(); // Last field
-                                }
-                              }
-                            },
-                            decoration: InputDecoration(
+                            style: const TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF001D57),
+                            ),
+                            onChanged: (value) => _onOtpChanged(value, index),
+                            decoration: const InputDecoration(
                               counterText: '',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
+                              border: InputBorder.none,
                             ),
                           ),
-                        );
-                      }),
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 30),
-                    // Continue Button
                     SizedBox(
                       width: double.infinity,
+                      height: 55,
                       child: ElevatedButton(
                         onPressed: () {
-                          // Handle verification
-                          String otp = _controllers
-                              .map((controller) => controller.text)
-                              .join();
-                          print('Entered OTP: $otp'); // Debug
+                          // Add verification logic here
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF001D57),
-                          padding: const EdgeInsets.symmetric(vertical: 15),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(12),
                           ),
+                          elevation: 0,
                         ),
                         child: const Text(
-                          'Continue',
-                          style: TextStyle(fontSize: 18, color: Colors.white),
+                          'Verify',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    TextButton(
+                      onPressed: () {
+                        // Add resend code logic here
+                      },
+                      child: const Text(
+                        'Resend Code',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color(0xFF001D57),
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),

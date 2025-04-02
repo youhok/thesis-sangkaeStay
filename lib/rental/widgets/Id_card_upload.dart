@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
 
 class IDCardUploadWidget extends StatelessWidget {
   final VoidCallback onUpload;
+  final File? file;
 
-  const IDCardUploadWidget({super.key, required this.onUpload});
+  const IDCardUploadWidget({
+    super.key,
+    required this.onUpload,
+    this.file,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -11,24 +17,54 @@ class IDCardUploadWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Upload ID Card',
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+          'ID Card',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 8),
         GestureDetector(
           onTap: onUpload,
           child: Container(
-            height: 50,
+            width: double.infinity,
+            height: 150,
             decoration: BoxDecoration(
               border: Border.all(color: Colors.grey),
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(10),
             ),
-            child: const Center(
-              child: Icon(Icons.cloud_upload, color: Colors.grey),
-            ),
+            child: file != null
+                ? ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.file(
+                      file!,
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      height: double.infinity,
+                    ),
+                  )
+                : const Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.upload_file,
+                          size: 40,
+                          color: Colors.grey,
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          'Upload ID Card',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
           ),
         ),
-        const SizedBox(height: 20),
       ],
     );
   }

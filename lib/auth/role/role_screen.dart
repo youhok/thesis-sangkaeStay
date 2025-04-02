@@ -2,10 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sankaestay/rental/util/icon_util.dart';
 import 'package:sankaestay/util/constants.dart';
+import 'package:sankaestay/auth/landlord/signup_landlord.dart';
+import 'package:sankaestay/auth/tenants/signup_tenants.dart';
 // Import for SVG images
 
 class RoleScreen extends StatelessWidget {
   const RoleScreen({super.key});
+
+  void _navigateToSignup(BuildContext context, String role) {
+    if (role == 'landlord') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const SignupLandlord(),
+        ),
+      );
+    } else if (role == 'tenant') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const SignupTenants(),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,9 +95,8 @@ class RoleScreen extends StatelessWidget {
                       children: [
                         // Landlord Button
                         ElevatedButton(
-                          onPressed: () {
-                            // Navigate to landlord screen
-                          },
+                          onPressed: () =>
+                              _navigateToSignup(context, 'landlord'),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.primaryBlue,
                             padding: const EdgeInsets.symmetric(vertical: 15),
@@ -86,7 +105,7 @@ class RoleScreen extends StatelessWidget {
                             ),
                           ),
                           child: Padding(
-                            padding:  const EdgeInsets.only(right: 20 , left: 20),
+                            padding: const EdgeInsets.only(right: 20, left: 20),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: const [
@@ -115,9 +134,7 @@ class RoleScreen extends StatelessWidget {
 
                         // Tenant Button
                         ElevatedButton(
-                          onPressed: () {
-                            // Navigate to tenant screen
-                          },
+                          onPressed: () => _navigateToSignup(context, 'tenant'),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.primaryBlue,
                             padding: const EdgeInsets.symmetric(vertical: 15),
@@ -126,7 +143,7 @@ class RoleScreen extends StatelessWidget {
                             ),
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.only(right: 20 , left: 20),
+                            padding: const EdgeInsets.only(right: 20, left: 20),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: const [

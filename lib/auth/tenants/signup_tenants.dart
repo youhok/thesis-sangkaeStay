@@ -15,17 +15,28 @@ class SignupTenants extends StatelessWidget {
       backgroundColor: AppColors.primaryBlue,
       body: Column(
         children: [
-          // Top bar with language selector
+          // Top bar with language selector and back button
           Container(
             height: MediaQuery.of(context).size.height * 0.1,
             width: double.infinity,
             color: AppColors.primaryBlue,
-            child: Align(
-              alignment: Alignment.topRight,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 45, right: 20),
-                child: LanguageDropdown(),
-              ),
+            child: Row(
+              children: [
+                // Back button
+                Padding(
+                  padding: const EdgeInsets.only(top: 45, left: 20),
+                  child: IconButton(
+                    icon: const Icon(Icons.arrow_back, color: Colors.white),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ),
+                const Spacer(),
+                // Language dropdown
+                Padding(
+                  padding: const EdgeInsets.only(top: 45, right: 20),
+                  child: LanguageDropdown(),
+                ),
+              ],
             ),
           ),
           Expanded(
@@ -66,7 +77,10 @@ class SignupTenants extends StatelessWidget {
                     Custombutton(onPressed: () {}, text: "Sign Up"),
                     const SizedBox(height: 20),
                     Center(
-                      child: Text("Or Sign Up vai Gmail" ,style: TextStyle(color: Colors.grey , fontSize: 17),),
+                      child: Text(
+                        "Or Sign Up via Gmail",
+                        style: TextStyle(color: Colors.grey, fontSize: 17),
+                      ),
                     ),
                     const SizedBox(height: 20),
                     GoogleSignUpButton(

@@ -1,36 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:sankaestay/util/constants.dart';
 
-class CustomTextField extends StatefulWidget {
+class CustomTextField extends StatelessWidget {
   final String label;
   final String hintText;
   final String? suffixText;
   final TextEditingController? controller;
+  final String? Function(String?)? validator;
   final bool isPassword;
   final IconData? suffixIcon;
   final TextInputType keyboardType;
   final bool isMultiline;
   final Function(String)? onChanged;
+  final bool obscureText;
 
   const CustomTextField({
+    super.key,
     required this.label,
     required this.hintText,
     this.isPassword = false,
     this.controller,
+    this.validator,
     this.suffixText,
     this.suffixIcon,
     this.keyboardType = TextInputType.text,
     this.isMultiline = false,
     this.onChanged,
-    super.key,
+    this.obscureText = false,
   });
-
-  @override
-  _CustomTextFieldState createState() => _CustomTextFieldState();
-}
-
-class _CustomTextFieldState extends State<CustomTextField> {
-  bool _obscureText = true;
 
   @override
   Widget build(BuildContext context) {
@@ -38,22 +35,22 @@ class _CustomTextFieldState extends State<CustomTextField> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          widget.label,
+          label,
           style: const TextStyle(
             fontSize: 16,
-            fontWeight: FontWeight.w500,
-            color: Colors.black,
+            fontWeight: FontWeight.bold,
           ),
         ),
         const SizedBox(height: 8),
         TextFormField(
-          controller: widget.controller,
-          obscureText: widget.isPassword ? _obscureText : false,
-          keyboardType: widget.keyboardType,
-          maxLines: widget.isMultiline ? null : 1,
-          onChanged: widget.onChanged,
+          controller: controller,
+          validator: validator,
+          obscureText: obscureText || isPassword,
+          keyboardType: keyboardType,
+          maxLines: isMultiline ? null : 1,
+          onChanged: onChanged,
           decoration: InputDecoration(
-            hintText: widget.hintText,
+            hintText: hintText,
             hintStyle: const TextStyle(color: Colors.grey),
             contentPadding: const EdgeInsets.symmetric(
               vertical: 16,
@@ -80,25 +77,23 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 width: 2.0,
               ),
             ),
-            suffixText: widget.suffixText,
+            suffixText: suffixText,
             suffixStyle: const TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.w500,
             ),
-            suffixIcon: widget.isPassword
+            suffixIcon: isPassword
                 ? IconButton(
                     icon: Icon(
-                      _obscureText ? Icons.visibility_off : Icons.visibility,
+                      obscureText ? Icons.visibility_off : Icons.visibility,
                       color: Colors.grey,
                     ),
                     onPressed: () {
-                      setState(() {
-                        _obscureText = !_obscureText;
-                      });
+                      // Handle visibility toggle
                     },
                   )
-                : widget.suffixIcon != null
-                    ? Icon(widget.suffixIcon, color: Colors.grey)
+                : suffixIcon != null
+                    ? Icon(suffixIcon, color: Colors.grey)
                     : null,
           ),
         ),
