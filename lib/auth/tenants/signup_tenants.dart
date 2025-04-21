@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:sankaestay/rental/widgets/Custom_button.dart';
 import 'package:sankaestay/rental/widgets/button_ggle.dart';
 import 'package:sankaestay/rental/widgets/language_dropdown.dart';
@@ -56,8 +57,8 @@ class SignupTenants extends StatelessWidget {
                     const SizedBox(height: 20),
                     SvgPicture.asset('images/logo_blue.svg', height: 110),
                     const SizedBox(height: 20),
-                    const Text(
-                      'Sign Up as Tenant',
+                     Text(
+                      'signup_Tenant.signUpAsTenant'.tr,
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
@@ -65,20 +66,20 @@ class SignupTenants extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    CustomTextField(label: "Name", hintText: "John Doe"),
+                    CustomTextField(label: "signup_Tenant.name".tr, hintText: "signup_Tenant.enterName".tr),
                     const SizedBox(height: 10),
                     CustomTextField(
-                        label: "Phone Number /Email",
-                        hintText: "Enter you phone number or email"),
+                        label: "signup_Tenant.phoneOrEmail".tr,
+                        hintText: "signup_Tenant.enterPhoneOrEmail".tr),
                     const SizedBox(height: 10),
                     CustomTextField(
-                        label: "Password", hintText: "Enter your password"),
+                        label: "signup_Tenant.password".tr, hintText: "signup_Tenant.enterPassword".tr),
                     const SizedBox(height: 20),
-                    Custombutton(onPressed: () {}, text: "Sign Up"),
+                    Custombutton(onPressed: () {}, text: "signup_Tenant.signUp".tr),
                     const SizedBox(height: 20),
                     Center(
                       child: Text(
-                        "Or Sign Up via Gmail",
+                        "signup_Tenant.orSignUpWithGmail".tr,
                         style: TextStyle(color: Colors.grey, fontSize: 17),
                       ),
                     ),
@@ -94,12 +95,12 @@ class SignupTenants extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
-                          'Already have an account? ',
+                        Text(
+                          'signup_Tenant.alreadyHaveAccount'.tr,
                           style: TextStyle(fontSize: 16, color: Colors.grey),
                         ),
-                        const Text(
-                          'Sign In',
+                         Text(
+                          'signup_Tenant.signIn'.tr,
                           style: TextStyle(
                               fontSize: 16, color: AppColors.primaryBlue),
                         ),

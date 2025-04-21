@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sankaestay/rental/widgets/dynamicscreen/base_screen.dart';
 import 'package:sankaestay/rental/widgets/landlordwidgets/Custom_Dropdown_Field.dart';
 import 'package:sankaestay/util/constants.dart';
@@ -25,7 +26,7 @@ class _BookingScreenState extends State<BookingScreen> {
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
-      title: "Room Details",
+      title: "booking_screen.roomDetails".tr,
       actionButton:  Stack(
             children: [
               IconButton(
@@ -78,13 +79,13 @@ class _BookingScreenState extends State<BookingScreen> {
                               children: [
                                 // Set Date Section
                                 Text(
-                                  "Set the Date",
+                                  "booking_screen.setTheDate".tr,
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold),
                                 ),
                                 SizedBox(height: 4),
-                                Text("Please book the date when you move in."),
+                                Text("booking_screen.setTheDateDescription".tr),
                                 SizedBox(height: 12),
                                 Container(
                                   padding: EdgeInsets.all(8),
@@ -125,22 +126,22 @@ class _BookingScreenState extends State<BookingScreen> {
 
                                 // Phone Number
                                 CustomTextField(
-                                  label: "Phone Number",
-                                  hintText: "Enter your phone number",
+                                  label: "booking_screen.phoneNumber".tr,
+                                  hintText: "booking_screen.enterPhoneNumber".tr,
                                   controller: _phoneController,
                                 ),
                                 SizedBox(height: 12),
 
                                 // Profession
                                 CustomTextField(
-                                  label: "Profession",
+                                  label: "booking_screen.profession".tr,
                                   hintText: "Student",
                                   controller: _professionController,
                                 ),
                                 SizedBox(height: 12),
 
                                 // Upload ID Card
-                                const Text("Upload ID Card"),
+                                 Text("booking_screen.uploadIdCard".tr),
                                 const SizedBox(height: 8),
                                 Container(
                                   height: 50,
@@ -157,7 +158,7 @@ class _BookingScreenState extends State<BookingScreen> {
 
                                 // Rent Type Dropdown
                                 CustomDropdownField(
-                                  label: "Rent Type",
+                                  label: "booking_screen.rentType".tr,
                                   options: ["monthly", "contract"],
                                   hintText: "Select rent type",
                                   selectedValue: _selectedRentType,
@@ -179,8 +180,8 @@ class _BookingScreenState extends State<BookingScreen> {
                                         height: 12,
                                       ),
                                       CustomTextField(
-                                        label: "Rent Duration",
-                                        hintText: "month",
+                                        label: "booking_screen.rentDuration".tr,
+                                        hintText: "booking_screen.month".tr,
                                         controller: _rentDurationController,
                                       )
                                     ],
@@ -192,7 +193,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                   onPressed: () {
                                     // Handle booking logic
                                   },
-                                  text: "Book Now",
+                                  text: "booking_screen.bookNow".tr,
                                 ),
                               ],
                             ),

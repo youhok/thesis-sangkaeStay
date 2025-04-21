@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 
+import 'package:get/get.dart';
+
 class IDCardUploadWidget extends StatelessWidget {
   final VoidCallback onUpload;
   final File? file;
@@ -16,8 +18,8 @@ class IDCardUploadWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'ID Card',
+         Text(
+          'signup_landlord.upload_id_card'.tr,
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,

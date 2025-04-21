@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'package:sankaestay/util/constants.dart';
 
@@ -76,7 +77,7 @@ class BookmarkScreen extends StatelessWidget {
                                   child: Padding(
                                     padding: const EdgeInsets.only(top: 10.0),
                                     child: Text(
-                                      "Clear All",
+                                      "bookmark.clearAll".tr,
                                       style: TextStyle(
                                         color: AppColors.secondaryBlue,
                                         fontSize: 14,

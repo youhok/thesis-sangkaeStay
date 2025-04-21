@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:sankaestay/rental/widgets/Custom_button.dart';
 import 'package:sankaestay/rental/widgets/language_dropdown.dart';
 import 'package:sankaestay/util/constants.dart';
@@ -11,14 +12,14 @@ class ForgetPassword extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF001D57),
+      backgroundColor: AppColors.primaryBlue,
       body: Column(
         children: [
           // Top bar with language selector
           Container(
             height: MediaQuery.of(context).size.height * 0.1,
             width: double.infinity,
-            color: const Color(0xFF001D57),
+            color: AppColors.primaryBlue,
             child: Align(
               alignment: Alignment.topRight,
               child: Padding(
@@ -44,8 +45,8 @@ class ForgetPassword extends StatelessWidget {
                     const SizedBox(height: 20),
                     SvgPicture.asset('images/logo_blue.svg', height: 110),
                     const SizedBox(height: 20),
-                    const Text(
-                      'Forget Password',
+                     Text(
+                      'forget_password_screen.forgetpassword'.tr,
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
@@ -54,12 +55,12 @@ class ForgetPassword extends StatelessWidget {
                     ),
                     const SizedBox(height: 30),
                     CustomTextField(
-                        label: "Phone Number /Email",
-                        hintText: "Enter you phone number or email"),
+                        label: "forget_password_screen.label".tr,
+                        hintText: "forget_password_screen.placeholder".tr),
                     SizedBox(
                       height: 20,
                     ),
-                    Custombutton(onPressed: () {}, text: "Continue"),
+                    Custombutton(onPressed: () {}, text: "forget_password_screen.continue".tr),
                     SizedBox(
                       height: 380,
                     ),
@@ -67,12 +68,12 @@ class ForgetPassword extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
-                          'Already have an account? ',
+                         Text(
+                          'forget_password_screen.alreadyHaveAccount'.tr,
                           style: TextStyle(fontSize: 16, color: Colors.grey),
                         ),
-                        const Text(
-                          'Sign In',
+                         Text(
+                          'forget_password_screen.signIn'.tr,
                           style: TextStyle(
                               fontSize: 16, color: AppColors.primaryBlue),
                         ),

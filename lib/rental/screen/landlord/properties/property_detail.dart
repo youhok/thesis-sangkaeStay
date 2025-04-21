@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:sankaestay/core/config/view_map_screen.dart';
@@ -20,7 +21,7 @@ class PropertyDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     LatLng roomLocation = const LatLng(13.0957, 103.2022);
     return BaseScreen(
-      title: "Property Details", 
+      title: "property_detail.title".tr, 
       child:  Stack(
         children: [
           Column(
@@ -73,11 +74,11 @@ class PropertyDetailScreen extends StatelessWidget {
                                 const SizedBox(height: 10),
                                 InfoRow(
                                     icon: AppIcons.home,
-                                    label: "Property ID",
+                                    label: "property_detail.property_id".tr,
                                     value: ": BTB1241"),
                                 InfoRow(
                                     icon: Icons.meeting_room,
-                                    label: "Rooms",
+                                    label: "property_detail.rooms".tr,
                                     value: "        : 10"),
                                 const SizedBox(height: 10),
                                 const Text(
@@ -90,14 +91,14 @@ class PropertyDetailScreen extends StatelessWidget {
                                 const SizedBox(height: 20),
                                 _buildUtilityInfo(),
                                 const SizedBox(height: 20),
-                                SectionTitle(title: "Description"),
+                                SectionTitle(title: "property_detail.description".tr),
                                 const Text(
                                   "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
                                   style: TextStyle(
                                       fontSize: 14, color: Colors.grey),
                                 ),
                                 const SizedBox(height: 20),
-                                SectionTitle(title: "Room feature"),
+                                SectionTitle(title: "property_detail.room_feature".tr),
                                 Wrap(
                                   spacing: 8,
                                   children: [
@@ -112,8 +113,9 @@ class PropertyDetailScreen extends StatelessWidget {
                                   ],
                                 ),
                                 const SizedBox(height: 20),
-                                SectionTitle(title: "Location on maps"),
+                                SectionTitle(title: "property_detail.location_on_map".tr),
                                 const SizedBox(height: 15),
+                              
                                 GestureDetector(
                                   onTap: () {
                                     debugPrint(
@@ -172,6 +174,7 @@ class PropertyDetailScreen extends StatelessWidget {
                             ),
                           ),
                           _buildActionButtons(context),
+                                      
                         ],
                       ),
                     ),
@@ -191,19 +194,19 @@ class PropertyDetailScreen extends StatelessWidget {
       children: [
         InfoRow(
             icon: AppIcons.electricity,
-            label: "Electricity",
+            label: "property_detail.utilities.electricity".tr,
             value: ":0.35     \$ / kWh"),
         InfoRow(
             icon: AppIcons.water,
-            label: "Water",
+            label: "property_detail.utilities.water".tr,
             value: "       :0.35     \$ / m³"),
         InfoRow(
             icon: AppIcons.delete,
-            label: "Garbage",
+            label: "property_detail.utilities.garbage".tr,
             value: "  :0           \$ / month"),
         InfoRow(
             icon: AppIcons.internet,
-            label: "Internet",
+            label: "property_detail.utilities.internet".tr,
             value: "   :0           \$ / month"),
       ],
     );
@@ -224,8 +227,8 @@ class PropertyDetailScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
-            child: const Text(
-              "Delete this property?",
+            child:  Text(
+              "property_detail.delete_property".tr,
               style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
             ),
           ),
@@ -242,7 +245,7 @@ class PropertyDetailScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  child: const Text("Edit",
+                  child: Text("property_detail.edit".tr,
                       style: TextStyle(color: Colors.white)),
                 ),
               ),
@@ -263,7 +266,7 @@ class PropertyDetailScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  child: const Text("Manage Rooms",
+                  child:  Text("property_detail.manage_rooms".tr,
                       style: TextStyle(color: Colors.white)),
                 ),
               ),

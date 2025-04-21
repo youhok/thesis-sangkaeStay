@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sankaestay/rental/widgets/Custom_button.dart';
 import 'package:sankaestay/rental/widgets/dynamicscreen/base_screen.dart';
-import 'package:sankaestay/rental/widgets/landlordwidgets/Custom_Dropdown_Field.dart';
 import 'package:sankaestay/rental/widgets/phone_number_input.dart';
 import 'package:sankaestay/util/constants.dart';
 import 'package:sankaestay/widgets/Custom_Text_Field.dart';
@@ -16,10 +16,9 @@ class EditProfileTenants extends StatefulWidget {
 class _EditProfileTenantsState extends State<EditProfileTenants> {
   @override
   Widget build(BuildContext context) {
-    String gender = 'Male';
     TextEditingController phoneController = TextEditingController();
     return BaseScreen(
-      title: "Edit Profile", 
+      title: "edit_profile.title".tr, 
       child: Stack(
         children: [
           Column(
@@ -51,35 +50,24 @@ class _EditProfileTenantsState extends State<EditProfileTenants> {
                           const SizedBox(height: 10),
                           // First Name Field
                           CustomTextField(
-                              label: "First Name", hintText: "First Name"),
+                              label: "edit_profile.first_name".tr, hintText: "edit_profile.placeholders.enter_first_name".tr),
                           const SizedBox(height: 10),
-
-                          // Last Name Field
-                          CustomTextField(
-                              label: "Last Name", hintText: "Last Name"),
-                          const SizedBox(height: 10),
-
-                          // Gender Dropdown
-                          CustomDropdownField(
-                            label: "Gender",
-                            options: ['Male', 'Female'],
-                            selectedValue: gender,
-                            onChanged: (value) =>
-                                setState(() => gender = value!),
-                          ),
-                          const SizedBox(height: 10),
-
+                        
                           // Telegram Username Field
                           CustomTextField(
-                            label: "Telegram Phone Number/Username (Optional)",
-                            hintText: "@heng_youhok",
+                            label: "edit_profile.telegram".tr,
+                            hintText: "edit_profile.placeholders.enter_telegram".tr,
                           ),
+                           const SizedBox(height: 10),
+                            CustomTextField(
+                              label: "edit_profile.email".tr, hintText: "edit_profile.placeholders.enter_email".tr),
+                    
                           const SizedBox(height: 10),
-                          PhoneNumberInput(controller: phoneController),
+                          PhoneNumberInput(label: "edit_profile.phone_number".tr, controller: phoneController),
                           SizedBox(
                             height: 20,
                           ),
-                          Custombutton(onPressed: () {}, text: "Save")
+                          Custombutton(onPressed: () {}, text: "edit_profile.save".tr)
                         ],
                       ),
                     ),

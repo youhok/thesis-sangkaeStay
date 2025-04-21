@@ -1,5 +1,6 @@
 //screen dashboard for controller tenants
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sankaestay/rental/util/icon_util.dart';
 import 'package:sankaestay/rental/widgets/App_Drawer.dart';
 import 'package:sankaestay/util/constants.dart';
@@ -44,8 +45,8 @@ class Dashboard extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 5), // Adjust spacing between icon and text
-            const Text(
-              'Dashboard',
+             Text(
+              'dashboardlandlord.title'.tr,
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,
@@ -110,25 +111,25 @@ class Dashboard extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            _buildStatCard('0', 'Total Property', Colors.blue,
+                            _buildStatCard('0', 'dashboardlandlord.total_property'.tr, Colors.blue,
                                 Icons.apartment),
                             _buildStatCard(
-                                '0', 'Total Tenants', Colors.red, Icons.person),
-                            _buildStatCard('0', 'Renewal Tenants', Colors.green,
+                                '0', 'dashboardlandlord.total_tenants'.tr, Colors.red, Icons.person),
+                            _buildStatCard('0', 'dashboardlandlord.renewal_tenants'.tr, Colors.green,
                                 Icons.money),
                           ],
                         ),
                         const SizedBox(height: 20),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
+                          children:  [
                             Text(
-                              'Renews Tenants',
+                              'dashboardlandlord.renews_tenants'.tr,
                               style: TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              'View All',
+                              'dashboardlandlord.view_all'.tr,
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.blue,

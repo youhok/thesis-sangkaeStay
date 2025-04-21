@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:sankaestay/rental/screen/language/language.dart';
 import 'package:sankaestay/rental/widgets/Outlined_Button.dart';
 import 'package:sankaestay/rental/widgets/profile_menu_Item.dart';
 import 'package:sankaestay/rental/widgets/profile_user.dart';
@@ -36,17 +38,19 @@ class SettingScreen extends StatelessWidget {
                             const SizedBox(height: 20),
                             ProfileMenuItem(
                               icon: Icons.edit,
-                              text: 'Edit Profile',
+                              text: 'settings.edit_profile'.tr,
                               onTap: () {},
                             ),
                             ProfileMenuItem(
                               icon: Icons.language,
-                              text: 'Language',
-                              onTap: () {},
+                              text: 'settings.language'.tr,
+                              onTap: () {
+                                  Get.to(() => const Language());
+                              },
                             ),
                             ProfileMenuItem(
                               icon: Icons.support_agent,
-                              text: 'Support',
+                              text: 'settings.support'.tr,
                               onTap: () {},
                             ),
                             SizedBox(
@@ -54,7 +58,7 @@ class SettingScreen extends StatelessWidget {
                             ),
 
                             CustomOutlinedButton(
-                              text: "Log Out",
+                              text: "settings.log_out".tr,
                               onPressed: () {
                                 // Your logout logic here
                               },

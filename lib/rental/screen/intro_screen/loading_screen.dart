@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
 import 'package:sankaestay/util/constants.dart';
 import 'package:sankaestay/auth/role/role_screen.dart';
 import 'package:sankaestay/widgets/Triangle_Painter.dart';
@@ -138,8 +139,8 @@ class _LoadingScreenState extends State<LoadingScreen> {
                   ),
                   const SizedBox(height: 8),
                   // Subtitle
-                  const Text(
-                    'Find Room & Manage Property',
+                   Text(
+                    'loading_screen.findroom'.tr,
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.white,

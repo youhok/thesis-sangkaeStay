@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:sankaestay/rental/util/icon_util.dart';
 import 'package:sankaestay/rental/widgets/Info_Row.dart';
 import 'package:sankaestay/rental/widgets/receipt_card.dart';

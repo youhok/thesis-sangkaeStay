@@ -6,6 +6,7 @@ import 'package:sankaestay/rental/widgets/Custom_button.dart';
 import 'package:sankaestay/rental/widgets/dynamicscreen/base_screen.dart';
 import 'package:sankaestay/util/constants.dart';
 import 'package:sankaestay/widgets/Custom_Text_Field.dart';
+import 'package:get/get.dart';
 
 class AddPropertyScreen extends StatefulWidget {
   const AddPropertyScreen({super.key});
@@ -65,7 +66,7 @@ class _AddPropertyScreenState extends State<AddPropertyScreen> {
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
-      title: "Add New Property",
+      title: "add_property_step_1.title".tr,
       child: LayoutBuilder(
         builder: (context, constraints) {
           return Column(
@@ -120,8 +121,8 @@ class _AddPropertyScreenState extends State<AddPropertyScreen> {
                                 ),
                               ),
                               const SizedBox(height: 15),
-                              const Text(
-                                'Get Started Managing Your Property',
+                               Text(
+                                "add_property_step_1.section_title".tr,
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -130,17 +131,17 @@ class _AddPropertyScreenState extends State<AddPropertyScreen> {
                               ),
                               const SizedBox(height: 20),
                               CustomTextField(
-                                  label: "Property Name",
+                                  label: "add_property_step_1.property_name".tr,
                                   hintText: "ពិសិទ្ធបន្ទប់ជួលបឹងឈូក"),
                               const SizedBox(height: 10),
                               CustomTextField(
-                                  label: "Address",
+                                  label: "add_property_step_1.address".tr,
                                   hintText: "ភូមិ, ឃុំ, ស្រុក, ខេត"),
                               const SizedBox(height: 16),
 
                               // Set on Map
-                              const Text(
-                                'Set on Map',
+                              Text(
+                                'add_property_step_1.set_location'.tr,
                                 style: TextStyle(
                                     fontSize: 16, color: Colors.black),
                               ),
@@ -166,8 +167,8 @@ class _AddPropertyScreenState extends State<AddPropertyScreen> {
                               ),
 
                               const SizedBox(height: 16),
-                              const Text(
-                                'Add Images',
+                               Text(
+                                'add_property_step_1.add_images'.tr,
                                 style: TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.w600),
                               ),
@@ -218,16 +219,16 @@ class _AddPropertyScreenState extends State<AddPropertyScreen> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Text(
-                                    'Description (Optional)',
+                                  Text(
+                                    'add_property_step_1.description_optional'.tr,
                                     style: TextStyle(
                                         fontSize: 16, color: Colors.black),
                                   ),
                                   const SizedBox(height: 8),
-                                  const TextField(
+                                   TextField(
                                     maxLines: 4,
                                     decoration: InputDecoration(
-                                      labelText: 'Enter Description',
+                                      labelText: 'add_property_step_1.enter_description'.tr,
                                       alignLabelWithHint: true,
                                       border: OutlineInputBorder(),
                                     ),
@@ -238,8 +239,9 @@ class _AddPropertyScreenState extends State<AddPropertyScreen> {
                               const SizedBox(height: 24),
                               Custombutton(
                                 onPressed: _goToNextPage,
-                                text: "Next",
+                                text: "add_property_step_1.next".tr,
                               ),
+                            
                             ],
                           ),
                         ),
@@ -276,8 +278,8 @@ class _AddPropertyScreenState extends State<AddPropertyScreen> {
                                 ),
                               ),
                               const SizedBox(height: 15),
-                              const Text(
-                                'Get Started Managing Your Property',
+                               Text(
+                                "add_property_step_1.section_title".tr,
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -286,30 +288,30 @@ class _AddPropertyScreenState extends State<AddPropertyScreen> {
                               ),
                               const SizedBox(height: 20),
                               Row(
-                                children: const [
+                                children:  [
                                   Expanded(
                                     child: CustomTextField(
-                                      label: 'Room Size',
+                                      label: 'add_property_step_2.room_size'.tr,
                                       hintText: '3×4 m',
                                     ),
                                   ),
                                   SizedBox(width: 16),
                                   Expanded(
                                     child: CustomTextField(
-                                      label: 'Rent Amount',
+                                      label: 'add_property_step_2.rent_amount'.tr,
                                       hintText: '\$50.0',
                                     ),
                                   ),
                                 ],
                               ),
                               const SizedBox(height: 16),
-                              const CustomTextField(
-                                label: 'Rooms',
+                              CustomTextField(
+                                label: 'add_property_step_2.rooms'.tr,
                                 hintText: "Enter Quantity's Room",
                               ),
                               const SizedBox(height: 16),
-                              const Text(
-                                'Room Feature',
+                               Text(
+                                'add_property_step_2.room_features'.tr,
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -348,17 +350,17 @@ class _AddPropertyScreenState extends State<AddPropertyScreen> {
                               ),
                               const SizedBox(height: 16),
                               Row(
-                                children: const [
+                                children:  [
                                   Expanded(
                                     child: CustomTextField(
-                                      label: 'Water Price',
+                                      label: 'add_property_step_2.water_price'.tr,
                                       hintText: '\$0.25/m3',
                                     ),
                                   ),
                                   SizedBox(width: 16),
                                   Expanded(
                                     child: CustomTextField(
-                                      label: 'Electricity Price',
+                                      label: 'add_property_step_2.electricity_price'.tr,
                                       hintText: '\$0.27/kwh',
                                     ),
                                   ),
@@ -366,17 +368,17 @@ class _AddPropertyScreenState extends State<AddPropertyScreen> {
                               ),
                               const SizedBox(height: 16),
                               Row(
-                                children: const [
+                                children:  [
                                   Expanded(
                                     child: CustomTextField(
-                                      label: 'Garbage (Optional)',
+                                      label: 'add_property_step_2.garbage_price'.tr,
                                       hintText: '\$0.25/month',
                                     ),
                                   ),
                                   SizedBox(width: 16),
                                   Expanded(
                                     child: CustomTextField(
-                                      label: 'Internet (Optional)',
+                                      label: 'add_property_step_2.internet_price'.tr,
                                       hintText: '\$1.00/month',
                                     ),
                                   ),
@@ -384,7 +386,8 @@ class _AddPropertyScreenState extends State<AddPropertyScreen> {
                               ),
                               const SizedBox(height: 24),
                               Custombutton(
-                                  onPressed: () {}, text: "Add Property"),
+                                  onPressed: () {}, text: "add_property_step_2.add_property".tr),
+                           
                             ],
                           ),
                         ),

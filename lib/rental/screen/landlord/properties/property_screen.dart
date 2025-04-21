@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sankaestay/rental/screen/landlord/properties/addproperty_screen.dart';
 import 'package:sankaestay/rental/util/icon_util.dart';
 import 'package:sankaestay/rental/widgets/custom_search_field.dart';
@@ -60,7 +61,7 @@ class _PropertyScreenState extends State<PropertyScreen> {
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
-      title: "Properties",
+      title: "property_list.title".tr,
        child:Stack(
         children: [
           Column(
@@ -78,11 +79,11 @@ class _PropertyScreenState extends State<PropertyScreen> {
                     children: [
                       const SizedBox(height: 20),
                       Padding(
-                        padding: const EdgeInsets.only(left: 12.0 , right: 12.0),
+                        padding:  EdgeInsets.only(left: 12.0 , right: 12.0),
                         child: CustomSearchField(
                           controller: _searchController,
                           onChanged: _filterProperties,
-                          hintText: 'Search properties...',
+                          hintText: 'property_list.search_placeholder'.tr,
                         ),
                       ),
                       const SizedBox(height: 10),

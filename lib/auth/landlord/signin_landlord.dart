@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:sankaestay/rental/widgets/Custom_button.dart';
 import 'package:sankaestay/rental/widgets/language_dropdown.dart';
 import 'package:sankaestay/util/constants.dart';
@@ -44,8 +45,8 @@ class SigninLandlord extends StatelessWidget {
                     const SizedBox(height: 20),
                     SvgPicture.asset('images/logo_blue.svg', height: 110),
                     const SizedBox(height: 20),
-                    const Text(
-                      'Sign In as Landlord',
+                     Text(
+                      'signin_landlord.title'.tr,
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
@@ -54,11 +55,11 @@ class SigninLandlord extends StatelessWidget {
                     ),
                     const SizedBox(height: 30),
                     CustomTextField(
-                        label: "Phone Number /Email",
-                        hintText: "Enter you phone number or email"),
+                        label: "signin_landlord.phone_email_label".tr,
+                        hintText: "signin_landlord.phone_email_hint".tr),
                     const SizedBox(height: 10),
                     CustomTextField(
-                        label: "Password", hintText: "Enter your password"),
+                        label: "signin_landlord.password_label".tr, hintText: "signin_landlord.password_hint".tr),
                     const SizedBox(height: 20),
                     Align(
                       alignment: Alignment
@@ -70,7 +71,7 @@ class SigninLandlord extends StatelessWidget {
                               .end, // Ensures text is aligned right
                           children: [
                             Text(
-                                "Forget Password ?" , style: TextStyle(color: Colors.grey , fontSize: 15 , ), ), // No need for an extra Row
+                                "signin_landlord.forgot_password".tr , style: TextStyle(color: Colors.grey , fontSize: 15 , ), ), // No need for an extra Row
                           ],
                         ),
                       ),
@@ -78,19 +79,19 @@ class SigninLandlord extends StatelessWidget {
                     SizedBox(
                       height: 20,
                     ),
-                    Custombutton(onPressed: () {}, text: "Sign In"),
+                    Custombutton(onPressed: () {}, text: "signin_landlord.sign_in".tr),
                     SizedBox(
                       height: 250,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
-                          'Already have an account? ',
+                        Text(
+                          'signin_landlord.already_have_account'.tr,
                           style: TextStyle(fontSize: 16, color: Colors.grey),
                         ),
-                        const Text(
-                          'Sign Up',
+                         Text(
+                          'signin_landlord.sign_up'.tr,
                           style: TextStyle(
                               fontSize: 16, color: AppColors.primaryBlue),
                         ),

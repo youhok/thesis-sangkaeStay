@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sankaestay/rental/util/icon_util.dart';
 import 'package:sankaestay/rental/widgets/Custom_button.dart';
 import 'package:sankaestay/rental/widgets/custom_search_field.dart';
@@ -18,8 +19,8 @@ class SetupPayment extends StatelessWidget {
           icon: const Icon(AppIcons.arrowback, color: Colors.white, size: 30),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text(
-          'Payments',
+        title:  Text(
+          "payments.title".tr,
           style: TextStyle(
               color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
         ),
@@ -27,10 +28,10 @@ class SetupPayment extends StatelessWidget {
       ),
       body: Column(
         children: [
-          const Padding(
+           Padding(
             padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
             child: Text(
-              "Go to your Bakong app and copy your account id",
+              "payments.set_up_bakong".tr,
               style: TextStyle(color: Colors.white, fontSize: 16),
               textAlign: TextAlign.center,
             ),
@@ -63,7 +64,7 @@ class SetupPayment extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text("Bakong account id",
+                   Text("payments.Bakong_account_id".tr,
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 10),

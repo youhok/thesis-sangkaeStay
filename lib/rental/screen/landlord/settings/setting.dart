@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:sankaestay/rental/screen/language/language.dart';
 import 'package:sankaestay/rental/widgets/Outlined_Button.dart';
 import 'package:sankaestay/rental/widgets/dynamicscreen/base_screen.dart';
 import 'package:sankaestay/rental/widgets/profile_menu_Item.dart';
@@ -11,7 +13,7 @@ class Setting extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
-      title: "Settings", 
+      title: "settings.title".tr, 
       child: Stack(
         children: [
           Column(
@@ -38,22 +40,24 @@ class Setting extends StatelessWidget {
                         const SizedBox(height: 20),
                         ProfileMenuItem(
                           icon: Icons.edit,
-                          text: 'Edit Profile',
+                          text: 'settings.edit_profile'.tr,
                           onTap: () {},
                         ),
                         ProfileMenuItem(
                           icon: Icons.language,
-                          text: 'Language',
-                          onTap: () {},
+                          text: 'settings.language'.tr,
+                          onTap: () {
+                                 Get.to(() => const Language());
+                          },
                         ),
                         ProfileMenuItem(
                           icon: Icons.support_agent,
-                          text: 'Support',
+                          text: 'settings.support'.tr,
                           onTap: () {},
                         ),
                         Spacer(),
                         CustomOutlinedButton(
-                          text: "Log Out",
+                          text: "settings.log_out".tr,
                           onPressed: () {
                             // Your logout logic here
                           },

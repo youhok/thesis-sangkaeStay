@@ -1,6 +1,7 @@
-//add tenants Screen
 import 'package:flutter/material.dart';
-import 'package:sankaestay/rental/util/icon_util.dart';
+import 'package:get/get.dart';
+import 'dart:io';
+// import 'package:sankaestay/rental/util/icon_util.dart';
 import 'package:sankaestay/rental/widgets/dynamicscreen/base_screen.dart';
 import 'package:sankaestay/rental/widgets/landlordwidgets/Custom_Date_Picker.dart';
 import 'package:sankaestay/rental/widgets/landlordwidgets/Custom_Dropdown_Field.dart';
@@ -10,32 +11,32 @@ import 'package:sankaestay/widgets/Custom_Text_Field.dart';
 import 'package:sankaestay/rental/widgets/Custom_button.dart';
 
 class AddTenantsScreen extends StatefulWidget {
-  const AddTenantsScreen({super.key});
-
   @override
-  _AddTenantsScreenState createState() => _AddTenantsScreenState();
+  State<AddTenantsScreen> createState() => _AddTenantsScreenState();
 }
 
 class _AddTenantsScreenState extends State<AddTenantsScreen> {
   final _formKey = GlobalKey<FormState>();
-  String? selectedRoom;
-  String? selectedProperty;
-  String gender = 'Male';
-  DateTime? dateOfBirth;
-  DateTime? moveInDate;
+
+  var selectedRoom = Rx<String?>('1');
+  var selectedProperty = Rx<String?>('1');
+  var gender = Rx<String>('male');
+  var dateOfBirth = Rx<DateTime?>(null);
+  var moveInDate = Rx<DateTime?>(null);
+  File? profileImage;
 
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
-      title: "Add Tenants", 
-      child:Stack(
+      title: "add_tenant.add_tenant".tr,
+      child: Stack(
         children: [
           Column(
             children: [
               Expanded(
                 child: Container(
                   decoration: const BoxDecoration(
-                    color: Colors.white,
+                    color: AppColors.white,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(30),
                       topRight: Radius.circular(30),
@@ -49,73 +50,89 @@ class _AddTenantsScreenState extends State<AddTenantsScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            CustomDropdownField(
-                              label: "Assign to Room",
-                              options: ['1', '2', '3'],
-                              selectedValue: selectedRoom,
-                              onChanged: (value) =>
-                                  setState(() => selectedRoom = value),
-                            ),
+                            Obx(() {
+                              return CustomDropdownField(
+                                label: "add_tenant.assign_to_room".tr,
+                                options: ['1', '2', '3'],
+                                selectedValue: selectedRoom.value,
+                                onChanged: (value) =>
+                                    selectedRoom.value = value,
+                              );
+                            }),
                             const SizedBox(height: 10),
-                            CustomDropdownField(
-                              label: "Assign to Property",
-                              options: ['1', '2'],
-                              selectedValue: selectedProperty,
-                              onChanged: (value) =>
-                                  setState(() => selectedProperty = value),
-                            ),
+                            Obx(() {
+                              return CustomDropdownField(
+                                label: "add_tenant.assign_to_property".tr,
+                                options: ['1', '2'],
+                                selectedValue: selectedProperty.value,
+                                onChanged: (value) =>
+                                    selectedProperty.value = value,
+                              );
+                            }),
                             const SizedBox(height: 10),
-                            CustomImageUpload(),
+                            CustomImageUpload(
+                              imageFile: profileImage,
+                              onImageChanged: (newImage) {
+                                profileImage = newImage;
+                              },
+                            ),
                             const SizedBox(height: 10),
                             CustomTextField(
-                                label: "Full Name",
-                                hintText: "Enter Full Name"),
+                              label: "add_tenant.full_name".tr,
+                              hintText: "add_tenant.placeholders.enter_full_name".tr,
+                            ),
                             const SizedBox(height: 10),
-                            CustomDropdownField(
-                              label: "Gender",
-                              options: ['Male', 'Female'],
-                              selectedValue: gender,
-                              onChanged: (value) =>
-                                  setState(() => gender = value!),
+                            Obx(() {
+                              return CustomDropdownField(
+                                label: "add_tenant.gender".tr,
+                                options: ["male", "female"],
+                                selectedValue: gender.value,
+                                onChanged: (value) => gender.value = value!,
+                                itemLabelBuilder: (value) =>
+                                    "add_tenant.labels.$value".tr,
+                              );
+                            }),
+                            const SizedBox(height: 10),
+                            CustomDatePicker(
+                              label: "add_tenant.date_of_birth".tr,
+                              selectedDate: dateOfBirth.value,
+                              onDateSelected: (date) =>
+                                  dateOfBirth.value = date,
+                            ),
+                            const SizedBox(height: 10),
+                            CustomTextField(
+                              label: "add_tenant.profession".tr,
+                              hintText: "add_tenant.placeholders.enter_profession".tr,
                             ),
                             const SizedBox(height: 10),
                             CustomDatePicker(
-                              label: "Date of Birth",
-                              selectedDate: dateOfBirth,
+                              label: "add_tenant.move_in_date".tr,
+                              selectedDate: moveInDate.value,
                               onDateSelected: (date) =>
-                                  setState(() => dateOfBirth = date),
+                                  moveInDate.value = date,
                             ),
                             const SizedBox(height: 10),
                             CustomTextField(
-                                label: "Profession",
-                                hintText: "Enter Profession"),
-                            const SizedBox(height: 10),
-                            CustomDatePicker(
-                              label: "Move In Date",
-                              selectedDate: moveInDate,
-                              onDateSelected: (date) =>
-                                  setState(() => moveInDate = date),
+                              label: "add_tenant.address".tr,
+                              hintText: "add_tenant.placeholders.enter_address".tr,
                             ),
                             const SizedBox(height: 10),
                             CustomTextField(
-                                label: "Address", hintText: "Enter Address"),
+                              label: "add_tenant.phone_number".tr,
+                              hintText: "add_tenant.placeholders.enter_phone_number".tr,
+                            ),
                             const SizedBox(height: 10),
                             CustomTextField(
-                                label: "Phone Number",
-                                hintText: "Enter Phone Number"),
-                            const SizedBox(height: 10),
-                            CustomTextField(
-                              label:
-                                  "Telegram Phone Number/Username (Optional)",
-                              hintText: "Enter Telegram Contact",
+                              label: "add_tenant.telegram_phone_number".tr,
+                              hintText:
+                                  "add_tenant.placeholders.enter_telegram_contact".tr,
                             ),
                             const SizedBox(height: 20),
-                            // Upload ID Label
-                            const Align(
+                            Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                'ID Card',
-                                style: TextStyle(
+                                "add_tenant.id_card".tr,
+                                style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
                                   color: Colors.black,
@@ -125,7 +142,7 @@ class _AddTenantsScreenState extends State<AddTenantsScreen> {
                             const SizedBox(height: 10),
                             GestureDetector(
                               onTap: () {
-                              
+                                // logic to upload ID card
                               },
                               child: Container(
                                 height: 220,
@@ -134,49 +151,22 @@ class _AddTenantsScreenState extends State<AddTenantsScreen> {
                                   border: Border.all(color: Colors.grey),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
-                                child: Center(
+                                child: const Center(
                                   child: Icon(
-                                    Icons.badge, // Replace with your icon
+                                    Icons.badge,
                                     color: Colors.grey,
                                     size: 40,
                                   ),
                                 ),
                               ),
                             ),
-
                             const SizedBox(height: 20),
-                            // Trash Icon (for removing the uploaded ID)
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(
-                                    8), // Set the radius here
-                                child: Container(
-                                  color: AppColors.secondaryGrey,
-                                  constraints: const BoxConstraints(
-                                    minWidth:
-                                        10, // Minimum width for the button
-                                    minHeight:
-                                        10, // Minimum height for the button
-                                  ),
-                                  child: IconButton(
-                                    onPressed: () {
-                                      // Handle delete action
-                                    },
-                                    icon: const Icon(
-                                      AppIcons.delete,
-                                      color: Colors.black,
-                                      size:
-                                          20, // Adjust icon size to fit the smaller button
-                                    ),
-                                    padding: EdgeInsets
-                                        .zero, // Remove internal padding for a compact look
-                                  ),
-                                ),
-                              ),
+                            Custombutton(
+                              onPressed: () {
+                                // handle form submission
+                              },
+                              text: "add_tenant.submit".tr,
                             ),
-                            const SizedBox(height: 20),
-                            Custombutton(onPressed: () {}, text: "Submit"),
                           ],
                         ),
                       ),
@@ -187,10 +177,7 @@ class _AddTenantsScreenState extends State<AddTenantsScreen> {
             ],
           ),
         ],
-      ), );
+      ),
+    );
   }
 }
-
-
-
-

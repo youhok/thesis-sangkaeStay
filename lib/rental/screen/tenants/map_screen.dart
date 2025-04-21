@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sankaestay/core/config/custom_google_map.dart';
 import 'package:sankaestay/rental/widgets/Custom_button.dart';
@@ -98,13 +99,13 @@ class _MapScreenState extends State<MapScreen> {
                   color: Colors.red,
                   fontWeight: FontWeight.bold)),
           const SizedBox(height: 10),
-          const Text("Description",
+           Text("map_screen.description".tr,
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           const SizedBox(height: 10),
           const Text(
               "Lorem Ipsum is simply dummy text of the printing industry."),
           const SizedBox(height: 10),
-          Custombutton(onPressed: () {}, text: "View More"),
+          Custombutton(onPressed: () {}, text: "map_screen.view_more".tr),
         ],
       ),
     );
@@ -155,8 +156,8 @@ class _MapScreenState extends State<MapScreen> {
                 ],
               ),
               child: TextField(
-                decoration: const InputDecoration(
-                  hintText: "Search",
+                decoration:  InputDecoration(
+                  hintText: "map_screen.placeholder".tr,
                   border: InputBorder.none,
                   prefixIcon: Icon(Icons.search, color: Colors.grey),
                 ),

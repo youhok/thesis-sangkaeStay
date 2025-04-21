@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:sankaestay/rental/widgets/Custom_button.dart';
 import 'package:sankaestay/rental/widgets/ID_card_upload.dart';
 import 'package:sankaestay/rental/widgets/language_dropdown.dart';
@@ -79,8 +80,8 @@ class _SignupLandlordState extends State<SignupLandlord> {
                       const SizedBox(height: 20),
                       SvgPicture.asset('images/logo_blue.svg', height: 110),
                       const SizedBox(height: 20),
-                      const Text(
-                        'Sign Up as Landlord',
+                      Text(
+                        'signup_landlord.title'.tr,
                         style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
@@ -89,26 +90,26 @@ class _SignupLandlordState extends State<SignupLandlord> {
                       ),
                       const SizedBox(height: 20),
                       CustomTextField(
-                        label: "Name",
-                        hintText: "Enter your name",
+                        label: "signup_landlord.name_label".tr,
+                        hintText: "signup_landlord.name_hint".tr,
                         controller: _nameController,
                       ),
                       const SizedBox(height: 10),
                       CustomTextField(
-                        label: "Email",
-                        hintText: "Enter your email",
+                        label: "signup_landlord.email_label".tr,
+                        hintText: "signup_landlord.email_hint".tr,
                         controller: _emailController,
                       ),
                       const SizedBox(height: 10),
                       CustomTextField(
-                        label: "Phone Number",
-                        hintText: "Enter your phone number",
+                        label: "signup_landlord.phone_label".tr,
+                        hintText: "signup_landlord.phone_hint".tr,
                         controller: _phoneController,
                       ),
                       const SizedBox(height: 10),
                       CustomTextField(
-                        label: "Password",
-                        hintText: "Enter your password",
+                        label: "signup_landlord.password_label".tr,
+                        hintText: "signup_landlord.password_hint".tr,
                         obscureText: true,
                         controller: _passwordController,
                       ),
@@ -119,20 +120,20 @@ class _SignupLandlordState extends State<SignupLandlord> {
                         },
                         file: null,
                       ),
-
+                      const SizedBox(height: 15),
                       // sign up button
                       Custombutton(
                         onPressed: () {
                           // Add sign up logic here
                         },
-                        text: "Sign Up",
+                        text: "signup_landlord.sign_up".tr,
                       ),
                       const SizedBox(height: 70),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text(
-                            'Already have an account? ',
+                           Text(
+                            'signup_landlord.already_have_account'.tr,
                             style: TextStyle(fontSize: 16, color: Colors.grey),
                           ),
                           GestureDetector(
@@ -142,8 +143,8 @@ class _SignupLandlordState extends State<SignupLandlord> {
                                 builder: (context) => const SigninLandlord(),
                               ),
                             ),
-                            child: const Text(
-                              'Sign In',
+                            child:  Text(
+                              'signup_landlord.sign_in'.tr,
                               style: TextStyle(
                                 fontSize: 16,
                                 color: AppColors.primaryBlue,

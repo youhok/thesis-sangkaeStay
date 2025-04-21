@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sankaestay/rental/util/icon_util.dart';
 import 'package:sankaestay/util/constants.dart';
 
@@ -40,20 +41,19 @@ class AppDrawer extends StatelessWidget {
               child: ListView(
                 padding: EdgeInsets.zero,
                 children: [
-                  _buildDrawerItem(AppIcons.dashboard, "Dashboard", selectedItem == "Dashboard"),
-                  _buildDrawerItem(AppIcons.home, "Properties", selectedItem == "Properties"),
-                  _buildDrawerItem(AppIcons.meetingroom, "Rooms", selectedItem == "Rooms"),
-                  _buildDrawerItem(AppIcons.people, "Tenants", selectedItem == "Tenants"),
-                  _buildDrawerItem(AppIcons.receipts, "Receipt", selectedItem == "Receipt"),
-                  _buildDrawerItem(AppIcons.star, "Premium", selectedItem == "Premium"),
-                  _buildDrawerItem(AppIcons.settings, "Settings", selectedItem == "Settings"),
+                  _buildDrawerItem(AppIcons.dashboard, "drawerlandlord.dashboard".tr, selectedItem == "Dashboard"),
+                  _buildDrawerItem(AppIcons.home, "drawerlandlord.properties".tr, selectedItem == "Properties"),
+                  _buildDrawerItem(AppIcons.people, "drawerlandlord.tenants".tr, selectedItem == "Tenants"),
+                  _buildDrawerItem(AppIcons.booking, "drawerlandlord.bookings".tr, selectedItem == "Receipt"),
+                  _buildDrawerItem(AppIcons.payments, "drawerlandlord.payments".tr, selectedItem == "Premium"),
+                  _buildDrawerItem(AppIcons.settings, "drawerlandlord.settings".tr, selectedItem == "Settings"),
                 ],
               ),
             ),
             // Logout Button
             Padding(
               padding: const EdgeInsets.only(bottom: 20),
-              child: _buildDrawerItem(Icons.logout, "Logout", false, color: Colors.red),
+              child: _buildDrawerItem(Icons.logout, "drawerlandlord.logout".tr, false, color: Colors.red),
             ),
           ],
         ),

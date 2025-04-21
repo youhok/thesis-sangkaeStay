@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sankaestay/rental/widgets/tenentwidgets/Rental_Card.dart';
 import 'package:sankaestay/util/constants.dart';
 
@@ -76,10 +77,10 @@ class HomeScreen extends StatelessWidget {
                           const SizedBox(height: 15),
 
                           //Near your Area Section
-                          const Padding(
+                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 16),
                             child: Text(
-                              "Near Your  Area",
+                              "home_screen.nearyourArea".tr,
                               style: TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.bold),
                             ),
@@ -95,10 +96,10 @@ class HomeScreen extends StatelessWidget {
                           ),
                           // Find Your Room Section
 
-                          const Padding(
+                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 16),
                             child: Text(
-                              "Find  Your  Room",
+                              "home_screen.findyourRoom".tr,
                               style: TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.bold),
                             ),
@@ -122,8 +123,8 @@ class HomeScreen extends StatelessWidget {
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(8)),
                                 ),
-                                child: const Text(
-                                  'More',
+                                child:  Text(
+                                  'home_screen.more'.tr,
                                   style: TextStyle(
                                       fontSize: 16,
                                       color: AppColors.secondaryBlue),

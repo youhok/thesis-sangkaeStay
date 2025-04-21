@@ -73,4 +73,6 @@ class AppIcons {
   static const IconData bookmark = Icons.bookmark;
   static const IconData maps = Icons.map_outlined;
   static const IconData menu = Icons.menu;
+    static const IconData booking = Icons.book_online;
+      static const IconData payments = Icons.payment;
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sankaestay/rental/util/icon_util.dart';
 import 'package:sankaestay/rental/widgets/dynamicscreen/base_screen.dart';
 import 'package:sankaestay/rental/widgets/landlordwidgets/invoice_card.dart';
@@ -11,7 +12,7 @@ class InvoiceDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
-      title: "Invoice Details",
+      title: "invoice_detail.title".tr,
       child: Stack(
         children: [
           Column(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sankaestay/rental/util/icon_util.dart';
 import 'package:sankaestay/rental/widgets/dynamicscreen/base_screen.dart';
 import 'package:sankaestay/util/constants.dart';
@@ -21,7 +22,7 @@ class InvoiceListScreen extends StatelessWidget {
         'date': "01 / 01 / 2025",
       }
     ]; // Empty for now
-    return BaseScreen(title: "Invoice Lists", child:  Stack(
+    return BaseScreen(title: "invoice_list.title".tr, child:  Stack(
         children: [
           Column(
             children: [
@@ -42,7 +43,7 @@ class InvoiceListScreen extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 20.0),
                         child: TextFormField(
                           decoration: InputDecoration(
-                            hintText: 'Search Receipt Number',
+                            hintText: 'invoice_list.placeholders'.tr,
                             hintStyle: TextStyle(color: Colors.grey),
                             filled: true, // Enable filling color
                             fillColor:

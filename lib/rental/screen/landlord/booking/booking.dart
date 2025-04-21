@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sankaestay/rental/widgets/dynamicscreen/base_screen.dart';
 import 'package:sankaestay/rental/widgets/landlordwidgets/status_card.dart';
 import 'package:sankaestay/util/constants.dart';
@@ -26,7 +27,7 @@ class Booking extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
-      title: "Bookings",
+      title: "booking.title".tr,
       child: Column(
         children: [
           const SizedBox(height: 20),
@@ -35,9 +36,9 @@ class Booking extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 14),
             child: Row(
-              children: const [
+              children:  [
                 Text(
-                  "Approved",
+                  "booking.approved".tr,
                   style: TextStyle(fontSize: 16, color: Colors.grey),
                 ),
                 Expanded(
@@ -122,12 +123,12 @@ class StatusRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: const [
-        StatusCard(label: "Pending", count: 2, color: Colors.grey),
+      children:  [
+        StatusCard(label: "booking.pending".tr, count: 2, color: Colors.grey),
         SizedBox(width: 10),
-        StatusCard(label: "Approved", count: 5, color: Colors.green),
+        StatusCard(label: "booking.approved".tr, count: 5, color: Colors.green),
         SizedBox(width: 10),
-        StatusCard(label: "Rejected", count: 0, color: Colors.red),
+        StatusCard(label: "booking.rejected".tr, count: 0, color: Colors.red),
       ],
     );
   }
@@ -207,16 +208,16 @@ class BookingDetailsModal extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 5),
-            _buildInfoRow("Profession", tenant['profession']!),
-            _buildInfoRow("Address", tenant['address']!),
-            _buildInfoRow("Telegram", tenant['telegram']!),
-            _buildInfoRow("Rent Type", tenant['rentType']!),
-            _buildInfoRow("Rent Duration", tenant['rentDuration']!),
-            _buildInfoRow("Create At", tenant['createAt']!),
-            _buildInfoRow("Move In", tenant['moveIn']!),
-            _buildInfoRow("Move Out", tenant['moveOut']!),
+            _buildInfoRow("booking.profession".tr, tenant['profession']!),
+            _buildInfoRow("booking.address".tr, tenant['address']!),
+            _buildInfoRow("booking.telegram".tr, tenant['telegram']!),
+            _buildInfoRow("booking.rent_type".tr, tenant['rentType']!),
+            _buildInfoRow("booking.rent_duration".tr, tenant['rentDuration']!),
+            _buildInfoRow("booking.create_at".tr, tenant['createAt']!),
+            _buildInfoRow("booking.move_in".tr, tenant['moveIn']!),
+            _buildInfoRow("booking.move_out".tr, tenant['moveOut']!),
             const SizedBox(height: 5),
-            const Text("ID Card",
+             Text("booking.id_card".tr,
                 style: TextStyle(fontWeight: FontWeight.bold)),
             Container(
               height: 180,
@@ -239,7 +240,7 @@ class BookingDetailsModal extends StatelessWidget {
                             BorderRadius.circular(6), // Reduce roundness
                       ),
                     ),
-                    child: const Text("Reject",
+                    child:  Text("booking.utilities.reject".tr,
                         style: TextStyle(color: Colors.red)),
                   ),
                 ),
@@ -254,7 +255,7 @@ class BookingDetailsModal extends StatelessWidget {
                             BorderRadius.circular(6), // Reduce roundness
                       ),
                     ),
-                    child: const Text("Approve",
+                    child: Text("booking.utilities.approve".tr,
                         style: TextStyle(color: Colors.white)),
                   ),
                 ),

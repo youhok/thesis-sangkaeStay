@@ -1,5 +1,6 @@
 // Tenants_detail
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sankaestay/rental/util/icon_util.dart';
 import 'package:sankaestay/rental/widgets/Custom_Icon_button.dart';
 import 'package:sankaestay/rental/widgets/dynamicscreen/base_screen.dart';
@@ -33,8 +34,8 @@ class TenantsDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
-      title: "Tenants Details",
-       child: Stack(
+      title: "tenant_detail.title".tr,
+      child: Stack(
         children: [
           Column(
             children: [
@@ -94,12 +95,13 @@ class TenantsDetailScreen extends StatelessWidget {
                           const SizedBox(height: 16),
 
                           // Tenant Info
-                          _buildInfoRow('Room ID:                 ', '01'),
-                          _buildInfoRow('Property ID:            ', '01'),
-                          _buildInfoRow('Gender:', '                    Male'),
+                          _buildInfoRow('tenant_detail.room_id'.tr, '                   01'),
+                          _buildInfoRow('tenant_detail.property_id'.tr, '              01'),
                           _buildInfoRow(
-                              'Date of Birth:', '          28/08/2001'),
-                          _buildInfoRow('Profession:', '              Student'),
+                              'tenant_detail.address'.tr, '                   Battambang'),
+                          _buildInfoRow(
+                              'tenant_detail.date_of_birth'.tr, '           28/08/2001'),
+                          _buildInfoRow('tenant_detail.profession'.tr, '               Student'),
                           const SizedBox(height: 20),
                           TextButton(
                             onPressed: () {},
@@ -132,7 +134,14 @@ class TenantsDetailScreen extends StatelessWidget {
                                 width: 20,
                               ),
                               CustomIconButton(
-                                  icon: AppIcons.badge , onPressed: () {}),
+                                  icon: AppIcons.badge, onPressed: () {}),
+                              SizedBox(width: 20),
+                              CustomIconButton(
+                                  icon: AppIcons.edit,
+                                  onPressed: () {}), // assuming edit icon
+                              SizedBox(width: 20),
+                              CustomIconButton(
+                                  icon: AppIcons.payments, onPressed: () {}),
                             ],
                           ),
                           SizedBox(
@@ -151,60 +160,59 @@ class TenantsDetailScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 20.0, top: 10),
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        // Edit Button
-                        ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xFF0B1F4E), // Dark Blue
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 30, vertical: 12),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(6),
-                            ),
-                          ),
-                          child: Text(
-                            'Edit',
-                            style: TextStyle(color: Colors.white, fontSize: 16),
-                          ),
-                        ),
-                        SizedBox(width: 16), // Space between buttons
-                        // Generate Receipt Button
-                        ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xFF0B1F4E), // Dark Blue
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 32, vertical: 12),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(6),
-                            ),
-                          ),
-                          child: Text(
-                            'Generate Receipt',
-                            style: TextStyle(color: Colors.white, fontSize: 16),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+              // Container(
+              //   color: Colors.white,
+              //   child: Padding(
+              //     padding: const EdgeInsets.only(bottom: 20.0, top: 10),
+              //     child: Center(
+              //       child: Row(
+              //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //         children: [
+              //           // Edit Button
+              //           ElevatedButton(
+              //             onPressed: () {},
+              //             style: ElevatedButton.styleFrom(
+              //               backgroundColor: Color(0xFF0B1F4E), // Dark Blue
+              //               padding: EdgeInsets.symmetric(
+              //                   horizontal: 30, vertical: 12),
+              //               shape: RoundedRectangleBorder(
+              //                 borderRadius: BorderRadius.circular(6),
+              //               ),
+              //             ),
+              //             child: Text(
+              //               'Edit',
+              //               style: TextStyle(color: Colors.white, fontSize: 16),
+              //             ),
+              //           ),
+              //           SizedBox(width: 16), // Space between buttons
+              //           // Generate Receipt Button
+              //           ElevatedButton(
+              //             onPressed: () {},
+              //             style: ElevatedButton.styleFrom(
+              //               backgroundColor: Color(0xFF0B1F4E), // Dark Blue
+              //               padding: EdgeInsets.symmetric(
+              //                   horizontal: 32, vertical: 12),
+              //               shape: RoundedRectangleBorder(
+              //                 borderRadius: BorderRadius.circular(6),
+              //               ),
+              //             ),
+              //             child: Text(
+              //               'Generate Receipt',
+              //               style: TextStyle(color: Colors.white, fontSize: 16),
+              //             ),
+              //           ),
+              //         ],
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ],
       ),
-       );
+    );
   }
 }
-
 
 Widget _buildInfoRow(String title, String value) {
   return Padding(
@@ -224,4 +232,3 @@ Widget _buildInfoRow(String title, String value) {
     ),
   );
 }
-

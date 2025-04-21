@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sankaestay/rental/util/icon_util.dart';
+import 'package:sankaestay/rental/widgets/custom_search_field.dart';
 import 'package:sankaestay/rental/widgets/dynamicscreen/base_screen.dart';
-import 'package:sankaestay/rental/widgets/landlordwidgets/Custom_Dropdown_Field.dart';
 import 'package:sankaestay/rental/widgets/landlordwidgets/Tenant_Card.dart';
+
 
 
 class RoomsWithoutPropertyid extends StatefulWidget {
@@ -19,7 +21,7 @@ class _RoomsWithoutPropertyidState extends State<RoomsWithoutPropertyid> {
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
-      title: "Rooms",
+      title: "property_detail.rooms".tr,
        child:Stack(
         children: [
           Column(
@@ -41,14 +43,7 @@ class _RoomsWithoutPropertyidState extends State<RoomsWithoutPropertyid> {
                         children: [
                           Container(
                              margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                            child: CustomDropdownField(
-                              label: "Select Property ID",
-                              options: ['Tenants 1', 'Tenant 2'],
-                              hintText: "Property ID",
-                              selectedValue: selectedTenant,
-                              onChanged: (value) =>
-                                  setState(() => selectedTenant = value),
-                            ),
+                            child: CustomSearchField()
                           ),
                           const SizedBox(height: 10),
                           Column(

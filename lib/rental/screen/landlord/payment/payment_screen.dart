@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sankaestay/rental/widgets/custom_search_field.dart';
 import 'package:sankaestay/rental/widgets/dynamicscreen/base_screen.dart';
 import 'package:sankaestay/util/constants.dart';
@@ -19,7 +20,7 @@ class PaymentScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
-      title: "Payments",
+      title: "payments.title".tr,
       child: Stack(
         children: [
           Padding(
@@ -29,8 +30,8 @@ class PaymentScreen extends StatelessWidget {
               children: [
                 const SizedBox(height: 10),
                 // Header Text
-                const Text(
-                  "Connect bank account",
+                Text(
+                  "payments.connect_bank_account".tr,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -56,7 +57,7 @@ class PaymentScreen extends StatelessWidget {
                 const Divider(),
                 const SizedBox(height: 15),
                 // Search Bar
-                const CustomSearchField(hintText: 'Search date'),
+                CustomSearchField(hintText: 'payments.placeholder'.tr),
                 const SizedBox(height: 15),
                 // Conditional UI for No Data / Data List
                 _payments.isEmpty

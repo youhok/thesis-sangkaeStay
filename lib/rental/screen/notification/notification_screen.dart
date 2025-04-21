@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sankaestay/rental/util/icon_util.dart';
 import 'package:sankaestay/rental/widgets/dynamicscreen/base_screen.dart';
 import 'package:sankaestay/util/constants.dart';
@@ -37,7 +38,7 @@ class NotificationScreen extends StatelessWidget {
     ];
 
     return BaseScreen(
-        title: "Notification",
+        title: "notification_screen.notification".tr,
         actionButton: Padding(
           padding: const EdgeInsets.only(right: 10.0),
           child: IconButton(

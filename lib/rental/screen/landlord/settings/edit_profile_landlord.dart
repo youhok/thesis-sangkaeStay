@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'package:sankaestay/rental/widgets/dynamicscreen/base_screen.dart';
-import 'package:sankaestay/rental/widgets/landlordwidgets/Custom_Dropdown_Field.dart';
+import 'package:sankaestay/rental/widgets/phone_number_input.dart';
 import 'package:sankaestay/util/constants.dart';
 import 'package:sankaestay/widgets/Custom_Text_Field.dart';
 import 'package:sankaestay/rental/widgets/Custom_button.dart';
@@ -14,14 +15,11 @@ class EditProfileLandlord extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfileLandlord> {
-  String gender = 'Male';
-  String selectedCountry = 'KH (+855)'; // Default country
-  TextEditingController phoneController = TextEditingController();
-
+ TextEditingController phoneController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
-      title: "Edit Profile", 
+      title: "edit_profile.title".tr, 
       child: Stack(
         children: [
           Column(
@@ -41,111 +39,36 @@ class _EditProfileState extends State<EditProfileLandlord> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          ProfileWithDeleteButton(),
+                          Center(
+                            child: ProfileAvatar(
+                              imagePath:
+                                  'images/person.png', // Replace with your image asset path
+                              onEdit: () {
+                                print("Edit button clicked");
+                              },
+                            ),
+                          ),
                           const SizedBox(height: 10),
                           // First Name Field
                           CustomTextField(
-                              label: "First Name", hintText: "First Name"),
+                              label: "edit_profile.first_name".tr, hintText: "edit_profile.placeholders.enter_first_name".tr),
                           const SizedBox(height: 10),
-                      
-                          // Last Name Field
-                          CustomTextField(
-                              label: "Last Name", hintText: "Last Name"),
-                          const SizedBox(height: 10),
-                      
-                          // Gender Dropdown
-                          CustomDropdownField(
-                            label: "Gender",
-                            options: ['Male', 'Female'],
-                            selectedValue: gender,
-                            onChanged: (value) => setState(() => gender = value!),
-                          ),
-                          const SizedBox(height: 10),
-                      
+                        
                           // Telegram Username Field
                           CustomTextField(
-                            label: "Telegram Phone Number/Username (Optional)",
-                            hintText: "@heng_youhok",
+                            label: "edit_profile.telegram".tr,
+                            hintText: "edit_profile.placeholders.enter_telegram".tr,
                           ),
+                           const SizedBox(height: 10),
+                            CustomTextField(
+                              label: "edit_profile.email".tr, hintText: "edit_profile.placeholders.enter_email".tr),
+                    
                           const SizedBox(height: 10),
-                      
-                          // Phone Number Input Field
-                          const Text(
-                            'Phone Number',
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black),
-                          ),
-                          const SizedBox(height: 10),
-                      
-                          Row(
-                            children: [
-                              // Phone Input Field
-                              Expanded(
-                                child: TextFormField(
-                                  controller: phoneController,
-                                  keyboardType: TextInputType.phone,
-                                  decoration: InputDecoration(
-                                    hintText: '968225617',
-                                    contentPadding:
-                                        const EdgeInsets.symmetric(vertical: 12),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    prefixIcon: Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 10),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          // Flag Image
-                                          Image.asset(
-                                            'images/cambodiaflag.png', // Ensure the flag is in assets
-                                            width: 30,
-                                          ),
-                                          const SizedBox(width: 5),
-                      
-                                          // Country Code
-                                          const Text(
-                                            'KH (+855)',
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                color: Colors.black),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    prefixIconConstraints: const BoxConstraints(
-                                        minWidth: 0, minHeight: 0),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 10),
-                      
-                              // Refresh Button
-                              Container(
-                                height: 50,
-                                width: 50,
-                                decoration: BoxDecoration(
-                                  color: AppColors
-                                      .primaryBlue, // Dark blue background
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: IconButton(
-                                  icon:
-                                      const Icon(Icons.sync, color: Colors.white),
-                                  onPressed: () {
-                                    // Add refresh functionality here
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
+                          PhoneNumberInput(label: "edit_profile.phone_number".tr, controller: phoneController),
                           SizedBox(
                             height: 20,
                           ),
-                          Custombutton(onPressed: () {}, text: "Save")
+                          Custombutton(onPressed: () {}, text: "edit_profile.save".tr)
                         ],
                       ),
                     ),
@@ -161,49 +84,50 @@ class _EditProfileState extends State<EditProfileLandlord> {
 }
 
 
+class ProfileAvatar extends StatelessWidget {
+  final String imagePath;
+  final VoidCallback? onEdit;
 
-class ProfileWithDeleteButton extends StatelessWidget {
-  const ProfileWithDeleteButton({super.key});
+  const ProfileAvatar({
+    super.key,
+    required this.imagePath,
+    this.onEdit,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
+    return Stack(
+      alignment: Alignment.bottomRight,
       children: [
-        // Profile Image
-        Container(
-          decoration: BoxDecoration(
-            border: Border.all(color: AppColors.primaryBlue, width: 2),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: Image.asset(
-              'images/person.png', // Replace with your image
-              width: 110,
-              height: 110,
-              fit: BoxFit.cover,
-            ),
+        CircleAvatar(
+          radius: 60,
+          backgroundColor: Colors.white,
+          child: CircleAvatar(
+            radius: 55,
+            backgroundImage: AssetImage(imagePath),
           ),
         ),
-        const SizedBox(width: 10),
-
-        // Delete Button
-
-        Container(
-          margin: EdgeInsets.only(top: 60),
-          decoration: BoxDecoration(
-            color: Colors.grey.shade300,
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: IconButton(
-            icon: const Icon(Icons.delete, color: AppColors.secondaryBlue),
-            onPressed: () {
-              // Handle delete action
-            },
+        Positioned(
+          right: 8,
+          bottom: 8,
+          child: GestureDetector(
+            onTap: onEdit,
+            child: Container(
+              padding: const EdgeInsets.all(6),
+              decoration: BoxDecoration(
+                color: AppColors.primaryBlue,
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.edit,
+                color: Colors.white,
+                size: 18,
+              ),
+            ),
           ),
         ),
       ],
     );
   }
 }
+

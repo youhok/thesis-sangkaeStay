@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:sankaestay/util/constants.dart';
 
 class Verification extends StatefulWidget {
@@ -134,8 +135,8 @@ class _VerificationState extends State<Verification> {
                           ),
                           elevation: 0,
                         ),
-                        child: const Text(
-                          'Verify',
+                        child:  Text(
+                          'verification.verify'.tr,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
@@ -149,8 +150,8 @@ class _VerificationState extends State<Verification> {
                       onPressed: () {
                         // Add resend code logic here
                       },
-                      child: const Text(
-                        'Resend Code',
+                      child:  Text(
+                        'verification.resendcode'.tr,
                         style: TextStyle(
                           fontSize: 16,
                           color: Color(0xFF001D57),

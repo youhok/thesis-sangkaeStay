@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:sankaestay/rental/widgets/Custom_button.dart';
 import 'package:sankaestay/util/constants.dart';
 
 
@@ -43,7 +45,7 @@ class Intro2Screen extends StatelessWidget {
                         SizedBox(height: 30),
                         // Title
                         Text(
-                          'Collect Rent Easily',
+                          'intro_2.title'.tr,
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
@@ -54,7 +56,7 @@ class Intro2Screen extends StatelessWidget {
                         SizedBox(height: 10),
                         // Subtitle
                         Text(
-                          'Simplify rent management with easy tracking and payment reminders',
+                          'intro_2.description'.tr,
                           style: TextStyle(
                             fontSize: 16,
                             color: Colors.grey[600],
@@ -69,22 +71,7 @@ class Intro2Screen extends StatelessWidget {
                     padding: const EdgeInsets.all(20.0),
                     child: SizedBox(
                       width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // Navigate to the next screen
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFF001D57), // Dark blue color
-                          padding: EdgeInsets.symmetric(vertical: 15),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                        child: Text(
-                          'Next',
-                          style: TextStyle(fontSize: 18, color: Colors.white),
-                        ),
-                      ),
+                      child: Custombutton(onPressed: () {}, text: "intro_2.next".tr)
                     ),
                   ),
                 ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:sankaestay/rental/util/icon_util.dart';
 import 'package:sankaestay/util/constants.dart';
 import 'package:sankaestay/auth/landlord/signup_landlord.dart';
@@ -64,8 +65,8 @@ class RoleScreen extends StatelessWidget {
                   const SizedBox(height: 20),
 
                   // Title Section
-                  const Text(
-                    'Who are you?',
+                   Text(
+                    'role.title'.tr,
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
@@ -75,10 +76,10 @@ class RoleScreen extends StatelessWidget {
                   const SizedBox(height: 10),
 
                   // Subtitle Section
-                  const Padding(
+                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 40),
                     child: Text(
-                      'Please select your role to proceed and explore tailored features designed just for you.',
+                      'role.description'.tr,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 16,
@@ -108,17 +109,17 @@ class RoleScreen extends StatelessWidget {
                             padding: const EdgeInsets.only(right: 20, left: 20),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: const [
+                              children:  [
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Landlord',
+                                      'role.landlord'.tr,
                                       style: TextStyle(
                                           fontSize: 18, color: Colors.white),
                                     ),
                                     Text(
-                                      "Manage your own properties",
+                                      "role.managelandlord".tr,
                                       style: TextStyle(
                                           fontSize: 11, color: Colors.white),
                                     )
@@ -146,17 +147,17 @@ class RoleScreen extends StatelessWidget {
                             padding: const EdgeInsets.only(right: 20, left: 20),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: const [
+                              children:  [
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Tenants',
+                                      'role.tenants'.tr,
                                       style: TextStyle(
                                           fontSize: 18, color: Colors.white),
                                     ),
                                     Text(
-                                      'Log in to your rental account',
+                                      'role.managetenants'.tr,
                                       style: TextStyle(
                                           fontSize: 11, color: Colors.white),
                                     ),

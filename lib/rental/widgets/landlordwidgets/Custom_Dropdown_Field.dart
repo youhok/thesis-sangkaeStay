@@ -7,6 +7,7 @@ class CustomDropdownField extends StatelessWidget {
   final String? hintText;
   final String? selectedValue;
   final ValueChanged<String?> onChanged;
+  final String Function(String)? itemLabelBuilder;
 
   const CustomDropdownField({
     required this.label,
@@ -14,6 +15,7 @@ class CustomDropdownField extends StatelessWidget {
     this.hintText,
     this.selectedValue,
     required this.onChanged,
+    this.itemLabelBuilder,
     super.key,
   });
 
@@ -43,17 +45,20 @@ class CustomDropdownField extends StatelessWidget {
                   style: const TextStyle(color: Colors.grey),
                 ),
               ),
-            ...options
-                .map((option) => DropdownMenuItem(
-                      value: option,
-                      child: Text(option),
-                    ))
-                .toList(),
+            ...options.map((option) {
+              final displayText = itemLabelBuilder != null
+                  ? itemLabelBuilder!(option)
+                  : option;
+              return DropdownMenuItem<String>(
+                value: option,
+                child: Text(displayText),
+              );
+            }).toList(),
           ],
           onChanged: onChanged,
           decoration: InputDecoration(
-            hintText: hintText, // Added hintText here
-            hintStyle: const TextStyle(color: Colors.grey), // Styled hint text
+            hintText: hintText,
+            hintStyle: const TextStyle(color: Colors.grey),
             contentPadding: const EdgeInsets.symmetric(
               vertical: 16,
               horizontal: 12,

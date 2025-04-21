@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:sankaestay/core/config/view_map_screen.dart';
 import 'package:sankaestay/rental/util/icon_util.dart';
@@ -18,7 +19,7 @@ class LocationPreview extends StatelessWidget {
   Widget build(BuildContext context) {
     LatLng roomLocation = const LatLng(13.0957, 103.2022);
     return BaseScreen(
-      title: "Room Details",
+      title: "location_preview.roomDetails".tr,
       child: Stack(
         children: [
           Column(
@@ -82,14 +83,14 @@ class LocationPreview extends StatelessWidget {
                                 const SizedBox(height: 20),
                                 _buildUtilityInfo(),
                                 const SizedBox(height: 20),
-                                SectionTitle(title: "Description"),
+                                SectionTitle(title: "location_preview.descriptionTitle".tr),
                                 const Text(
                                   "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
                                   style: TextStyle(
                                       fontSize: 14, color: Colors.grey),
                                 ),
                                 const SizedBox(height: 20),
-                                SectionTitle(title: "Room feature"),
+                                SectionTitle(title: "location_preview.roomFeature".tr),
                                 Wrap(
                                   spacing: 8,
                                   children: [
@@ -104,7 +105,7 @@ class LocationPreview extends StatelessWidget {
                                   ],
                                 ),
                                 const SizedBox(height: 20),
-                                SectionTitle(title: "Location on maps"),
+                                SectionTitle(title: "location_preview.locationOnMap".tr),
                                 const SizedBox(height: 15),
                                 GestureDetector(
                                   onTap: () {
@@ -194,19 +195,19 @@ class LocationPreview extends StatelessWidget {
       children: [
         InfoRow(
             icon: AppIcons.electricity,
-            label: "Electricity",
+            label: "location_preview.electricity".tr,
             value: ":0.35     \$ / kWh"),
         InfoRow(
             icon: AppIcons.water,
-            label: "Water",
+            label: "location_preview.water".tr,
             value: "       :0.35     \$ / m³"),
         InfoRow(
             icon: AppIcons.delete,
-            label: "Garbage",
+            label: "location_preview.garbage".tr,
             value: "  :0           \$ / month"),
         InfoRow(
             icon: AppIcons.internet,
-            label: "Internet",
+            label: "location_preview.internet".tr,
             value: "   :0           \$ / month"),
       ],
     );

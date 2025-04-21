@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sankaestay/util/constants.dart';
 
 class ErrorScreen extends StatelessWidget {
@@ -15,7 +16,7 @@ class ErrorScreen extends StatelessWidget {
             height: MediaQuery.of(context).size.height *
                 0.1, // Adjust top section height
             width: double.infinity,
-            color: const Color(0xFF001D57), // Same as background
+            color: AppColors.primaryBlue, // Same as background
             child: Padding(
               padding: const EdgeInsets.only(
                   left: 20.0, top: 45.0), // Adjust padding as needed
@@ -28,7 +29,7 @@ class ErrorScreen extends StatelessWidget {
                   ),
                   const SizedBox(
                       width: 10), // Add spacing between image and text
-                  const Text(
+                   Text(
                     'SangkaeStay',
                     style: TextStyle(
                       color: Colors.white,
@@ -68,14 +69,14 @@ class ErrorScreen extends StatelessWidget {
                         Navigator.pop(context); // Navigate back
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF001D57), // Dark blue
+                        backgroundColor: AppColors.primaryBlue, // Dark blue
                         padding: const EdgeInsets.symmetric(vertical: 15),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      child: const Text(
-                        'Back',
+                      child: Text(
+                        'error_screen.back'.tr,
                         style: TextStyle(
                           fontSize: 18,
                           color: Colors.white,

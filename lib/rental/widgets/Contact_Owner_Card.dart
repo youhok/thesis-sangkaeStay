@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sankaestay/rental/util/icon_util.dart';
 import 'package:sankaestay/rental/widgets/Custom_Icon_button.dart';
 import 'package:sankaestay/util/constants.dart';
@@ -29,7 +30,7 @@ class ContactOwnerCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Contact Owner",
+            "location_preview.contactOwner".tr,
             style: TextStyle(
               color: AppColors.primaryBlue,
               fontWeight: FontWeight.bold,
@@ -103,8 +104,8 @@ class ContactOwnerCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  child: const Text(
-                    "Book Now",
+                  child: Text(
+                    "location_preview.book".tr,
                     style: TextStyle(color: Colors.white),
                   ),
                 ),

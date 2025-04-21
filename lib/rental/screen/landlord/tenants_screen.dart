@@ -1,6 +1,7 @@
 //Tenants screen
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sankaestay/rental/screen/landlord/addtenants_screen.dart';
 import 'package:sankaestay/rental/util/icon_util.dart';
 import 'package:sankaestay/rental/widgets/dynamicscreen/base_screen.dart';
@@ -31,7 +32,7 @@ class TenantsScreen extends StatelessWidget {
     ]; // Empty for now
 
     return BaseScreen(
-      title: "Tenants", 
+      title: "tenant.title".tr, 
       child: Stack(
         children: [
           Column(
@@ -53,7 +54,7 @@ class TenantsScreen extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 20.0),
                         child: TextFormField(
                           decoration: InputDecoration(
-                            hintText: 'Search Name/Phone Number',
+                            hintText: 'tenant.placeholders'.tr,
                             hintStyle: TextStyle(color: Colors.grey),
                             contentPadding: const EdgeInsets.symmetric(
                               vertical: 16,

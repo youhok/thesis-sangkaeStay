@@ -1,9 +1,25 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sankaestay/util/constants.dart';
 
-
 class CustomImageUpload extends StatelessWidget {
-  const CustomImageUpload({super.key});
+  final File? imageFile;
+  final ValueChanged<File?> onImageChanged;
+
+  const CustomImageUpload({
+    super.key,
+    required this.imageFile,
+    required this.onImageChanged,
+  });
+
+  Future<void> _pickImage(BuildContext context) async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      onImageChanged(File(pickedFile.path));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,46 +29,53 @@ class CustomImageUpload extends StatelessWidget {
         const Text(
           "Tenant Profile (Optional)",
           style: TextStyle(
-              fontSize: 16, fontWeight: FontWeight.w500, color: Colors.black),
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+            color: Colors.black,
+          ),
         ),
         const SizedBox(height: 8),
         Row(
           children: [
-            Container(
-              width: 60,
-              height: 60,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: Colors.grey[300],
+            GestureDetector(
+              onTap: () => _pickImage(context),
+              child: Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: Colors.grey[300],
+                ),
+                child: imageFile != null
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.file(
+                          imageFile!,
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : const Icon(Icons.image, size: 40, color: Colors.grey),
               ),
-              child: const Icon(Icons.image, size: 40, color: Colors.grey),
             ),
             const SizedBox(width: 10),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8), // Set the radius here
+            if (imageFile != null)
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
                 child: Container(
                   color: AppColors.secondaryGrey,
-                  constraints: const BoxConstraints(
-                    minWidth: 10, // Minimum width for the button
-                    minHeight: 10, // Minimum height for the button
-                  ),
                   child: IconButton(
                     onPressed: () {
-                      // Handle delete action
+                      onImageChanged(null); // Clear image
                     },
                     icon: const Icon(
                       Icons.delete,
                       color: Colors.black,
-                      size: 20, // Adjust icon size to fit the smaller button
+                      size: 20,
                     ),
-                    padding: EdgeInsets
-                        .zero, // Remove internal padding for a compact look
+                    padding: EdgeInsets.zero,
                   ),
                 ),
               ),
-            ),
           ],
         ),
       ],
