@@ -9,37 +9,7 @@ class DashboardScreen extends StatefulWidget {
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
 }
-
 class _DashboardScreenState extends State<DashboardScreen> {
-  final List<Map<String, dynamic>> users = List.generate(10, (index) {
-    return {
-      "no": index + 1,
-      "id": "ID1234",
-      "name": "John Doe",
-      "email": "johndoe@example.com",
-      "phone": "092716312",
-      "role": index % 2 == 0 ? "tenant" : "landlord",
-      "createdAt": "27/02/2025 09:34 AM",
-      "updatedAt": index == 0 ? "02/03/2025 10:34 AM" : "Null",
-      "status": index % 3 == 0 ? "Online" : "Offline",
-    };
-  });
-  void _showEditUserDialog(BuildContext context, Map<String, dynamic> user) {
-  showDialog(
-    context: context,
-    builder: (context) => EditUserDialog(
-      user: user,
-      onSave: (updatedUser) {
-        setState(() {
-          user["name"] = updatedUser["name"];
-          user["email"] = updatedUser["email"];
-          user["phone"] = updatedUser["phone"];
-          user["role"] = updatedUser["role"];
-        });
-      },
-    ),
-  );
-}
 
   @override
   Widget build(BuildContext context) {
@@ -74,24 +44,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 10),
-            // **Centered Table Widget**
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 50, vertical: 8),
-                  child: Text(
-                    "All Users",
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Container(
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Tablewidget(
-              users: users,
-              onEditUser: _showEditUserDialog, // Pass function here
-            ),
-          ),
+            
               ],
             ),
           ],

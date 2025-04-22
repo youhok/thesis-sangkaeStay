@@ -1,5 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:sankaestay/rental/screen/intro_screen/loading_screen.dart';
+import 'package:sankaestay/routes/app_middleware.dart';
+import 'package:sankaestay/routes/app_router.dart';
+import 'package:sankaestay/screen/login_screen.dart';
+import 'package:sankaestay/screen/start_screen.dart';
+import 'package:sankaestay/screen/super_admin.dart';
 import 'package:sankaestay/translate/app_translate.dart';
 import 'package:sankaestay/translate/localization_controller.dart';
 import 'package:toastification/toastification.dart';
@@ -7,9 +13,15 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
+import 'package:flutter_web_plugins/flutter_web_plugins.dart'; 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Configure URL strategy for web
+  if (kIsWeb) {
+    setUrlStrategy(PathUrlStrategy()); // Add this line
+  }
 
   // Initialize Firebase
   await Firebase.initializeApp(
@@ -22,12 +34,10 @@ void main() async {
   Get.put(LocalizationController());
 
   runApp(MyApp());
-
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
 
   @override
   Widget build(BuildContext context) {
@@ -41,11 +51,18 @@ class MyApp extends StatelessWidget {
           translations: AppTranslations(),
           locale: Locale(selectedLanguage),
           fallbackLocale: const Locale('en'),
-          home: LoadingScreen(),
+          initialRoute: kIsWeb ? AdminRoutes.initialRoute : '/',
+          getPages: [
+            // Mobile app route
+            GetPage(
+              name: '/',
+              page: () => const LoadingScreen(),
+            ),
+            // Admin web routes
+            if (kIsWeb) ...AdminRoutes.routes,
+          ],
         );
       }),
     );
   }
 }
-
-

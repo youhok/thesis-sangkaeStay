@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:firebase_storage/firebase_storage.dart';
 
@@ -17,6 +18,20 @@ class StorageService {
     } catch (e) {
       print('Error uploading image: $e');
       rethrow;
+    }
+  }
+
+  Future<String> uploadImageBytes(String path, Uint8List bytes) async {
+    try {
+      final ref = _storage.ref().child(path);
+      final metadata = SettableMetadata(
+        contentType: 'image/jpeg',
+      );
+
+      await ref.putData(bytes, metadata);
+      return await ref.getDownloadURL();
+    } catch (e) {
+      throw Exception('Failed to upload image: ${e.toString()}');
     }
   }
 

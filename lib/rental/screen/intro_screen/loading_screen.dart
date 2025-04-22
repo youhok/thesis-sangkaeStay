@@ -62,6 +62,9 @@ class _LoadingScreenState extends State<LoadingScreen> {
           MaterialPageRoute(builder: (context) => const Dashboard()),
         );
         return;
+      } else if (role == 'Admin' || role == 'Super Admin') {
+        Navigator.of(context).pushReplacementNamed('/dashboard');
+        return;
       }
     }
 
@@ -90,6 +93,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('userId', user.uid);
         await prefs.setString('userEmail', user.email ?? '');
+        await prefs.setString('userName', userData?['name'] ?? '');
         await prefs.setString('userRole', role ?? '');
         await prefs.setBool('isLoggedIn', true);
 
@@ -108,6 +112,8 @@ class _LoadingScreenState extends State<LoadingScreen> {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => const Dashboard()),
           );
+        } else if (role == 'Admin' || role == 'Super Admin') {
+          Navigator.of(context).pushReplacementNamed('/dashboard');
         } else {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => const RoleScreen()),
