@@ -1,93 +1,101 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
 
-typedef CollectionCallback = void Function(List<Map<String, dynamic>>);
-typedef DocumentCallback = void Function(Map<String, dynamic>);
+typedef CollectionCallback = void Function(List<Map<String, dynamic>> data);
+typedef DocumentCallback = void Function(Map<String, dynamic> data);
 
-Future<StreamSubscription?> getCollectionQuery(
-  String collectionName,
-  List<Query<dynamic>>? whereDoc,
-  dynamic callback, {
+Future<StreamSubscription?> getCollectionQuery({
+  required String collectionName,
+  List<Query Function(Query)>? filters,
+  dynamic callback,
   String? docID,
   bool useSnapshot = false,
 }) async {
   final collectionRef = FirebaseFirestore.instance.collection(collectionName);
 
-  // Create a query based on whereDoc (if provided)
-  Query queryRef = collectionRef;
-  if (whereDoc != null) {
-    queryRef =
-        whereDoc.reduce((Query value, Query element) => value.where(element));
+  // Apply filters dynamically
+  Query query = collectionRef;
+  if (filters != null) {
+    for (var filter in filters) {
+      query = filter(query);
+    }
   }
 
   try {
+    // Realtime listener
     if (useSnapshot) {
-      final subscription =
-          queryRef.snapshots(includeMetadataChanges: true).listen(
+      final subscription = query.snapshots(includeMetadataChanges: true).listen(
         (snapshot) {
-          final data = snapshot.docs
-              .map((doc) => <String, dynamic>{
-                    'id': doc.id,
-                    ...(doc.data() as Map<String, dynamic>)
-                  })
-              .toList();
-          if (callback != null) {
-            (callback as CollectionCallback)(data);
-          }
+          final data = snapshot.docs.map((doc) => {
+                'id': doc.id,
+                ...doc.data() as Map<String, dynamic>,
+              }).toList();
+
+          if (callback is CollectionCallback) callback(data);
         },
+        onError: (error) => print("Snapshot Error: $error"),
       );
 
       return subscription;
     } else {
-      final snapshot = await queryRef.get();
-      final data = snapshot.docs
-          .map((doc) => <String, dynamic>{
-                'id': doc.id,
-                ...(doc.data() as Map<String, dynamic>)
-              })
-          .toList();
-      if (callback != null) {
-        (callback as CollectionCallback)(data);
-      }
+      // One-time fetch
+      final snapshot = await query.get();
+      final data = snapshot.docs.map((doc) => {
+            'id': doc.id,
+            ...doc.data() as Map<String, dynamic>,
+          }).toList();
+
+      if (callback is CollectionCallback) callback(data);
     }
 
+    // Optional: fetch a single doc by ID
     if (docID != null) {
-      final docRef = collectionRef.doc(docID);
-      final documentSnapshot = await docRef.get();
-      if (documentSnapshot.exists) {
-        final data = <String, dynamic>{
-          'id': documentSnapshot.id,
-          ...(documentSnapshot.data() ?? {})
+      final docSnapshot = await collectionRef.doc(docID).get();
+
+      if (docSnapshot.exists) {
+        final data = {
+          'id': docSnapshot.id,
+          ...docSnapshot.data() as Map<String, dynamic>,
         };
-        if (callback != null) {
-          (callback as DocumentCallback)(data);
-        }
-        return null;
+        if (callback is DocumentCallback) callback(data);
       } else {
-        print("Document does not exist");
+        print("❌ Document not found");
       }
     }
-  } catch (error) {
-    print("Error in getCollectionQuery: $error");
+  } catch (e) {
+    print("🔥 Firestore Error: $e");
   }
+
   return null;
 }
 
 
-// 1. Basic Use Case (Fetching a Collection Once)
-
-// getCollectionQuery("users", null, (List<Map<String, dynamic>> data) {
-//   print("Fetched users: $data");
-// });
-
-// 2. 2. Fetch Collection with Real-time Updates
-
-// StreamSubscription? subscription = await getCollectionQuery(
-//   "users",
-//   null,
-//   (List<Map<String, dynamic>> data) {
-//     print("Live user data: $data");
+// // Example: one-time fetch with filter
+// getCollectionQuery(
+//   collectionName: 'users',
+//   filters: [
+//     (query) => query.where('age', isGreaterThan: 18),
+//     (query) => query.orderBy('createdAt', descending: true),
+//   ],
+//   callback: (List<Map<String, dynamic>> users) {
+//     print(users);
 //   },
-//   useSnapshot: true,
 // );
 
+// // Example: realtime listener
+// final sub = await getCollectionQuery(
+//   collectionName: 'posts',
+//   useSnapshot: true,
+//   callback: (List<Map<String, dynamic>> posts) {
+//     print("Live posts: $posts");
+//   },
+// );
+
+// // Example: fetch single doc
+// getCollectionQuery(
+//   collectionName: 'users',
+//   docID: 'abc123',
+//   callback: (Map<String, dynamic> user) {
+//     print("User doc: $user");
+//   },
+// );

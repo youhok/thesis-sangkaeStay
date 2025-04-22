@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sankaestay/auth/role/role_screen.dart';
+import 'package:sankaestay/composables/useAuth.dart';
 import 'package:sankaestay/rental/screen/language/language.dart';
 import 'package:sankaestay/rental/widgets/Outlined_Button.dart';
 import 'package:sankaestay/rental/widgets/profile_menu_Item.dart';
 import 'package:sankaestay/rental/widgets/profile_user.dart';
 import 'package:sankaestay/util/constants.dart';
-
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
@@ -33,7 +34,9 @@ class SettingScreen extends StatelessWidget {
                         child: Column(
                           children: [
                             // Profile Card
-                           ProfileUser(imagePath: 'images/person.png', name: "Heng Youhok"),
+                            ProfileUser(
+                                imagePath: 'images/person.png',
+                                name: "Heng Youhok"),
 
                             const SizedBox(height: 20),
                             ProfileMenuItem(
@@ -45,7 +48,7 @@ class SettingScreen extends StatelessWidget {
                               icon: Icons.language,
                               text: 'settings.language'.tr,
                               onTap: () {
-                                  Get.to(() => const Language());
+                                Get.to(() => const Language());
                               },
                             ),
                             ProfileMenuItem(
@@ -53,14 +56,13 @@ class SettingScreen extends StatelessWidget {
                               text: 'settings.support'.tr,
                               onTap: () {},
                             ),
-                            SizedBox(
-                              height: 280,
-                            ),
 
                             CustomOutlinedButton(
                               text: "settings.log_out".tr,
                               onPressed: () {
-                                // Your logout logic here
+                                final auth = AuthService();
+                                auth.signOut();
+                                Get.offAll(() => const RoleScreen());
                               },
                             )
                           ],

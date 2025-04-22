@@ -54,8 +54,8 @@
 
   "signin_tenant":  {
       "signInAsTenant": "Sign in as a tenant",
-      "phoneOrEmail": "Phone number / email",
-      "enterPhoneOrEmail": "Enter your phone number or email",
+      "Email": "email",
+      "enterEmail": "Enter your email",
       "password": "Password",
       "enterPassword": "Enter your password",
       "forgotPassword": "Forgot your password?",
@@ -71,8 +71,8 @@
         "signUpAsTenant": "Sign Up as a Tenant",
         "name": "Name",
         "enterName": "Enter your name",
-        "phoneOrEmail": "Phone number / Email",
-        "enterPhoneOrEmail": "Enter phone number or email",
+        "Email": "Email",
+        "enterEmail": "Enter  email",
         "password": "Password",
         "enterPassword": "Enter your password",
         "signUp": "Sign Up",
@@ -84,8 +84,8 @@
 
     "forget_password_screen": {
         "forgetpassword": "Forget Password",
-        "label": "Phone Number /Email",
-        "placeholder": "Enter you phone number or email",
+        "label": "Email",
+        "placeholder": "Enter you  email",
         "continue": "Continue",
         "alreadyHaveAccount": "Already have an account?",
         "signIn": "Sign In"

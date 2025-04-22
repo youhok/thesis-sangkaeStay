@@ -3,19 +3,15 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class StorageService {
-  // Create a single instance of FirebaseStorage
   final FirebaseStorage _storage = FirebaseStorage.instance;
 
-  // Upload image and return its URL
   Future<String> uploadImage(String path, File imageFile) async {
     try {
-      // Create reference to the storage path
       final ref = _storage.ref().child(path);
 
       // Upload the file
       await ref.putFile(imageFile);
 
-      // Get and return the download URL
       final url = await ref.getDownloadURL();
       return url;
     } catch (e) {
@@ -24,16 +20,12 @@ class StorageService {
     }
   }
 
-  // Remove image from storage
   Future<void> removeImage(String path) async {
     try {
-      // Create reference to the storage path
       final ref = _storage.ref().child(path);
 
-      // Get metadata to check if file exists
       final metadata = await ref.getMetadata();
 
-      // If file exists (size > 0), delete it
       if (metadata.size != null && metadata.size! > 0) {
         await ref.delete();
         print('Image deleted successfully');

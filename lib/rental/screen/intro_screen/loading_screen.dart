@@ -7,6 +7,7 @@ import 'package:sankaestay/auth/role/role_screen.dart';
 import 'package:sankaestay/widgets/Triangle_Painter.dart';
 import 'package:sankaestay/rental/widgets/tenentwidgets/Bottom_navbar.dart';
 import 'package:sankaestay/rental/screen/landlord/dash_board.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoadingScreen extends StatefulWidget {
   const LoadingScreen({super.key});
@@ -25,25 +26,57 @@ class _LoadingScreenState extends State<LoadingScreen> {
     _checkAuth();
   }
 
+  Future<bool> checkLoginStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('isLoggedIn') ?? false;
+  }
+
+  Future<Map<String, String>> getUserData() async {
+    final prefs = await SharedPreferences.getInstance();
+    return {
+      'userId': prefs.getString('userId') ?? '',
+      'userEmail': prefs.getString('userEmail') ?? '',
+      'userName': prefs.getString('userName') ?? '',
+      'userRole': prefs.getString('userRole') ?? '',
+    };
+  }
+
   Future<void> _checkAuth() async {
-    await Future.delayed(
-        const Duration(seconds: 2)); // Show loading screen for 2 seconds
+    await Future.delayed(const Duration(seconds: 2));
     if (!mounted) return;
 
+    // First check SharedPreferences for logged in status
+    final isLoggedIn = await checkLoginStatus();
+    if (isLoggedIn) {
+      final userData = await getUserData();
+      final role = userData['userRole'];
+
+      // Navigate based on stored role
+      if (role == 'Tenant') {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const BottomNavBar()),
+        );
+        return;
+      } else if (role == 'Landlord') {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const Dashboard()),
+        );
+        return;
+      }
+    }
+
+    // If not logged in or no role stored, continue with Firebase check
     final user = _auth.currentUser;
     if (user == null) {
-      // User is not authenticated, navigate to role screen
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => const RoleScreen()),
       );
     } else {
       try {
-        // Get user document from Firestore
         final userDoc =
             await _firestore.collection('users').doc(user.uid).get();
 
         if (!userDoc.exists) {
-          // If user document doesn't exist, navigate to role screen
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => const RoleScreen()),
           );
@@ -53,32 +86,35 @@ class _LoadingScreenState extends State<LoadingScreen> {
         final userData = userDoc.data();
         final role = userData?['role'] as String?;
 
+        // Save user data to SharedPreferences
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('userId', user.uid);
+        await prefs.setString('userEmail', user.email ?? '');
+        await prefs.setString('userRole', role ?? '');
+        await prefs.setBool('isLoggedIn', true);
+
         if (role == null) {
-          // If role is not set, navigate to role screen
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => const RoleScreen()),
           );
           return;
         }
 
-        // Navigate based on role
-        if (role == 'tenant') {
+        if (role == 'Tenant') {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => const BottomNavBar()),
           );
-        } else if (role == 'landlord') {
+        } else if (role == 'Landlord') {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => const Dashboard()),
           );
         } else {
-          // Unknown role, navigate to role screen
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => const RoleScreen()),
           );
         }
       } catch (e) {
         print('Error checking user role: $e');
-        // On error, navigate to role screen
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => const RoleScreen()),
         );
@@ -139,7 +175,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
                   ),
                   const SizedBox(height: 8),
                   // Subtitle
-                   Text(
+                  Text(
                     'loading_screen.findroom'.tr,
                     style: TextStyle(
                       fontSize: 14,

@@ -1,10 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class GetCollectionPaginate {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final String pathCollection;
-  final List<Query> queryDocs;
+  final List<Query Function(Query)>? filters;
   final Function(List<Map<String, dynamic>>)? callback;
 
   List<Map<String, dynamic>> documents = [];
@@ -13,143 +13,117 @@ class GetCollectionPaginate {
 
   GetCollectionPaginate({
     required this.pathCollection,
-    required this.queryDocs,
+    this.filters,
     this.callback,
   }) {
-    getData();
+    _listenToData();
   }
 
-  // Get collection reference
-  CollectionReference get collectionRef =>
+  CollectionReference get _collectionRef =>
       _firestore.collection(pathCollection);
 
-  // Get query snapshot with provided query conditions
-  Query get querySnapshot => queryDocs.fold<Query>(
-        collectionRef,
-        (Query query, Query queryDoc) => queryDoc,
-      );
+  Query get _baseQuery {
+    Query query = _collectionRef;
+    if (filters != null) {
+      for (var f in filters!) {
+        query = f(query);
+      }
+    }
+    return query;
+  }
 
-  // Function to get previous page
-  Future<List<Map<String, dynamic>>> previousPage(
-      String page, int newLimited) async {
+  /// Get previous page
+  Future<List<Map<String, dynamic>>> previousPage(String docId, int limit) async {
     try {
-      final firstVisible =
-          await _firestore.collection(pathCollection).doc(page).get();
-
-      final newQuery =
-          querySnapshot.endBeforeDocument(firstVisible).limitToLast(newLimited);
-
-      await getDataWithQuery(newQuery);
+      final doc = await _collectionRef.doc(docId).get();
+      final query = _baseQuery.endBeforeDocument(doc).limitToLast(limit);
+      await _fetchQuery(query);
       return documents;
-    } catch (err) {
-      error = err.toString();
+    } catch (e) {
+      error = e.toString();
       return [];
     }
   }
 
-  // Function to get next page
-  Future<List<Map<String, dynamic>>> nextPage(
-      String page, int newLimited) async {
+  /// Get next page
+  Future<List<Map<String, dynamic>>> nextPage(String docId, int limit) async {
     try {
-      final firstVisible =
-          await _firestore.collection(pathCollection).doc(page).get();
-
-      final newQuery =
-          querySnapshot.startAfterDocument(firstVisible).limit(newLimited);
-
-      await getDataWithQuery(newQuery);
+      final doc = await _collectionRef.doc(docId).get();
+      final query = _baseQuery.startAfterDocument(doc).limit(limit);
+      await _fetchQuery(query);
       return documents;
-    } catch (err) {
-      error = err.toString();
+    } catch (e) {
+      error = e.toString();
       return [];
     }
   }
 
-  // Get collection length from server
-  Future<int> getCollectionLength(
-      String collectionName, List<Query> conditions) async {
+  /// Get full collection count with filters
+  Future<int> getCollectionLength() async {
     try {
-      final colRef = _firestore.collection(collectionName);
-      final q = conditions.fold<Query>(
-        colRef,
-        (Query query, Query condition) => condition,
-      );
-
-      final res = await q.count().get();
-      return res.count ?? 0;
-    } catch (err) {
-      error = err.toString();
+      final query = _baseQuery;
+      final snapshot = await query.count().get();
+      return snapshot.count ?? 0;
+    } catch (e) {
+      error = e.toString();
       return 0;
     }
   }
 
-  // Get data with specific query
-  Future<void> getDataWithQuery(Query query) async {
+  /// Fetch manually with query
+  Future<void> _fetchQuery(Query query) async {
     try {
       final snapshot = await query.get();
-      documents = snapshot.docs.map((doc) {
-        final data = doc.data() as Map<String, dynamic>;
-        return {'id': doc.id, ...data};
-      }).toList();
-
-      if (callback != null) {
-        callback!(documents);
-      }
-    } catch (err) {
-      error = err.toString();
+      documents = snapshot.docs
+          .map((doc) => {'id': doc.id, ...doc.data() as Map<String, dynamic>})
+          .toList();
+      callback?.call(documents);
+    } catch (e) {
+      error = e.toString();
     }
   }
 
-  // Listen to real-time updates
-  void getData() {
+  /// Real-time data updates
+  void _listenToData() {
     _subscription?.cancel();
-    _subscription = querySnapshot.snapshots().listen(
+    _subscription = _baseQuery.snapshots().listen(
       (snapshot) {
-        documents = snapshot.docs.map((doc) {
-          final data = doc.data() as Map<String, dynamic>;
-          return {'id': doc.id, ...data};
-        }).toList();
-
-        if (callback != null) {
-          callback!(documents);
-        }
+        documents = snapshot.docs
+            .map((doc) => {'id': doc.id, ...doc.data() as Map<String, dynamic>})
+            .toList();
+        callback?.call(documents);
       },
-      onError: (err) {
-        error = err.toString();
-      },
+      onError: (e) => error = e.toString(),
     );
   }
 
-  // Clean up subscription when done
   void dispose() {
     _subscription?.cancel();
   }
 }
 
 
-// void main() async {
-//   // Example usage of GetCollectionPaginate
-//   List<Query> queries = [
-//     FirebaseFirestore.instance.collection('your_collection').where('field', isEqualTo: 'value'),
-//     // Add more queries as needed
-//   ];
 
-//   GetCollectionPaginate paginator = GetCollectionPaginate(
-//     pathCollection: 'your_collection',
-//     queryDocs: queries,
-//     callback: (List<Map<String, dynamic>> documents) {
-//       print('Documents fetched: $documents');
-//     },
-//   );
+// final paginate = GetCollectionPaginate(
+//   pathCollection: 'products',
+//   filters: [
+//     (query) => query.where('active', isEqualTo: true),
+//     (query) => query.orderBy('createdAt', descending: true),
+//     (query) => query.limit(10),
+//   ],
+//   callback: (data) {
+//     print("🔥 Products: $data");
+//   },
+// );
 
-//   // Fetch next page of documents
-//   List<Map<String, dynamic>> nextPageDocuments = await paginator.nextPage('documentId', 10);
-//   print('Next page documents: $nextPageDocuments');
+// // Get next page
+// paginate.nextPage('docID_here', 10);
 
-//   // Fetch previous page of documents
-//   List<Map<String, dynamic>> previousPageDocuments = await paginator.previousPage('documentId', 10);
-//   print('Previous page documents: $previousPageDocuments');
+// // Get previous page
+// paginate.previousPage('docID_here', 10);
 
-//   // Clean up when done
-//   paginator.dispose();
-// }
+// // Get collection length
+// final count = await paginate.getCollectionLength();
+
+// // When you're done
+// paginate.dispose();

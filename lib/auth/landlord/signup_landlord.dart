@@ -1,12 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:sankaestay/composables/useAuth.dart';
 import 'package:sankaestay/rental/widgets/Custom_button.dart';
-import 'package:sankaestay/rental/widgets/ID_card_upload.dart';
+import 'package:sankaestay/rental/widgets/button_ggle.dart';
 import 'package:sankaestay/rental/widgets/language_dropdown.dart';
+import 'package:sankaestay/util/alert/alert.dart';
 import 'package:sankaestay/util/constants.dart';
 import 'package:sankaestay/widgets/Custom_Text_Field.dart';
 import 'package:sankaestay/auth/landlord/signin_landlord.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:toastification/toastification.dart';
 
 class SignupLandlord extends StatefulWidget {
   const SignupLandlord({super.key});
@@ -19,16 +24,117 @@ class _SignupLandlordState extends State<SignupLandlord> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
-  final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  final auth = AuthService();
 
   @override
   void dispose() {
     _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
-    _phoneController.dispose();
     super.dispose();
+  }
+
+  Future<void> signUp() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    try {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => const Center(child: CircularProgressIndicator()),
+      );
+
+      final user = await auth.signUp(
+        _emailController.text.trim(),
+        _passwordController.text.trim(),
+      );
+
+      if (user != null) {
+        await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+          'name': _nameController.text.trim(),
+          'email': _emailController.text.trim(),
+          'createdAt': DateTime.now(),
+          'imageURL': '',
+          'role': 'Landlord',
+        });
+
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('userId', user.uid);
+        await prefs.setString('userEmail', _emailController.text.trim());
+        await prefs.setString('userName', _nameController.text.trim());
+        await prefs.setString('userRole', 'Landlord');
+        await prefs.setBool('isLoggedIn', true);
+
+        Navigator.of(context).pop();
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const SigninLandlord()),
+        );
+      } else {
+        Navigator.of(context).pop();
+        Alert.show(
+          type: ToastificationType.error,
+          title: 'Sign Up Failed',
+          description: 'Failed to create account. Please try again.',
+        );
+      }
+    } catch (e) {
+      Navigator.of(context).pop();
+      Alert.show(
+        type: ToastificationType.error,
+        title: 'Error',
+        description: e.toString(),
+      );
+    }
+  }
+
+  Future<void> signInWithGoogle() async {
+    try {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => const Center(child: CircularProgressIndicator()),
+      );
+
+      final user = await auth.signInWithGoogle();
+
+      if (user != null) {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .update({
+          'role': 'Landlord',
+        });
+
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('userId', user.uid);
+        await prefs.setString('userEmail', user.email ?? '');
+        await prefs.setString('userName', user.displayName ?? '');
+        await prefs.setString('userRole', 'Landlord');
+        await prefs.setBool('isLoggedIn', true);
+        await prefs.setBool('isGoogleSignIn', true);
+
+        Navigator.of(context).pop();
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const SigninLandlord()),
+        );
+      } else {
+        Navigator.of(context).pop();
+        Alert.show(
+          type: ToastificationType.error,
+          title: 'Google Sign In Failed',
+          description: 'Unable to sign in with Google. Please try again.',
+        );
+      }
+    } catch (e) {
+      Navigator.of(context).pop();
+      Alert.show(
+        type: ToastificationType.error,
+        title: 'Error',
+        description: e.toString(),
+      );
+    }
   }
 
   @override
@@ -58,6 +164,7 @@ class _SignupLandlordState extends State<SignupLandlord> {
                   padding: const EdgeInsets.only(top: 45, right: 20),
                   child: LanguageDropdown(),
                 ),
+                const SizedBox(height: 20),
               ],
             ),
           ),
@@ -93,46 +200,76 @@ class _SignupLandlordState extends State<SignupLandlord> {
                         label: "signup_landlord.name_label".tr,
                         hintText: "signup_landlord.name_hint".tr,
                         controller: _nameController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your name';
+                          } else if (value.length < 3) {
+                            return 'Name must be at least 3 characters long';
+                          } else if (value.length > 20) {
+                            return 'Name must be less than 20 characters long';
+                          }
+                          return null;
+                        },
                       ),
                       const SizedBox(height: 10),
                       CustomTextField(
-                        label: "signup_landlord.email_label".tr,
-                        hintText: "signup_landlord.email_hint".tr,
-                        controller: _emailController,
-                      ),
-                      const SizedBox(height: 10),
-                      CustomTextField(
-                        label: "signup_landlord.phone_label".tr,
-                        hintText: "signup_landlord.phone_hint".tr,
-                        controller: _phoneController,
-                      ),
+                          label: "signup_landlord.email_label".tr,
+                          hintText: "signup_landlord.email_hint".tr,
+                          controller: _emailController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your email';
+                            }
+                            if (!value.contains('@')) {
+                              return 'Please enter a valid email';
+                            }
+                            return null;
+                          }),
                       const SizedBox(height: 10),
                       CustomTextField(
                         label: "signup_landlord.password_label".tr,
                         hintText: "signup_landlord.password_hint".tr,
                         obscureText: true,
                         controller: _passwordController,
-                      ),
-                      const SizedBox(height: 10),
-                      IDCardUploadWidget(
-                        onUpload: () {
-                          // Add file upload logic here
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your password';
+                          }
+                          if (value.length < 6) {
+                            return 'Password must be at least 6 characters';
+                          }
+                          return null;
                         },
-                        file: null,
                       ),
                       const SizedBox(height: 15),
                       // sign up button
                       Custombutton(
                         onPressed: () {
-                          // Add sign up logic here
+                          if (_formKey.currentState!.validate()) {
+                            signUp();
+                          }
                         },
                         text: "signup_landlord.sign_up".tr,
                       ),
+                      // sign up with Google button
+                      const SizedBox(height: 20),
+
+                      Center(
+                        child: Text(
+                          "signin_tenant.orSignUpWithGmail".tr,
+                          style: TextStyle(color: Colors.grey, fontSize: 17),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      GoogleSignUpButton(onPressed: signInWithGoogle),
+
                       const SizedBox(height: 70),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                           Text(
+                          Text(
                             'signup_landlord.already_have_account'.tr,
                             style: TextStyle(fontSize: 16, color: Colors.grey),
                           ),
@@ -143,7 +280,7 @@ class _SignupLandlordState extends State<SignupLandlord> {
                                 builder: (context) => const SigninLandlord(),
                               ),
                             ),
-                            child:  Text(
+                            child: Text(
                               'signup_landlord.sign_in'.tr,
                               style: TextStyle(
                                 fontSize: 16,
