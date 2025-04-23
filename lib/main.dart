@@ -12,28 +12,34 @@ import 'package:toastification/toastification.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-
-import 'package:flutter_web_plugins/flutter_web_plugins.dart'; 
+import 'package:flutter_web_plugins/url_strategy.dart'
+    if (dart.library.html) 'package:flutter_web_plugins/url_strategy.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Configure URL strategy for web
   if (kIsWeb) {
-    setUrlStrategy(PathUrlStrategy()); // Add this line
+    // Configure web-specific settings
+    try {
+      setUrlStrategy(null); // Use path URL strategy
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+    } catch (e) {
+      debugPrint('Error configuring web settings: $e');
+    }
+  } else {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
   }
-
-  // Initialize Firebase
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
 
   // Load translations FIRST
   await AppTranslations.loadTranslations();
   // Inject LocalizationController
   Get.put(LocalizationController());
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
